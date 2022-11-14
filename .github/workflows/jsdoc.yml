@@ -1,0 +1,28 @@
+name: jsdoc
+on:
+ push:
+   branches:
+     - master
+     - develop
+ workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Build
+      uses: codevise/documentation-js-action@v1
+      with:
+        input: ./src
+        output: ./docs
+
+    # For example:
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v2
+      env:
+        PERSONAL_TOKEN: ${{ secrets.GITHUB_PAT }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./docs
