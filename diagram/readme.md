@@ -1,7 +1,14 @@
-doc pour les diagrammes puml :
+# doc pour les diagrammes puml :
+
 https://plantuml.com/fr/
 
 (installer `jebbs.plantuml` dans vscode)
+
+# 1er esquice du diagrame de class
+
+![diagrame de class](./class.svg)
+
+# exemple dans le md
 
 ```plantuml:md-sample-sequence
 @startuml
@@ -19,4 +26,4 @@ Foo1 -> Foo6 : To collections
 @enduml
 ```
 
-![](./md-sample-sequence.svg)
+![exemple ramdom qui est au dessus](./md-sample-sequence.svg)
