@@ -30,6 +30,7 @@ enum Status{
     ACTIVE
     CLOSED
     FROZEN
+    test
 }
 
 user "1" -- "0..*" Account
