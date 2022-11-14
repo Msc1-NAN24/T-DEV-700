@@ -1,6 +1,11 @@
 name: Mirroring
 
-on: [push, delete, workflow_dispatch]
+on: 
+  push:
+   branches:
+      [main, develop]
+  delete:
+  workflow_dispatch:
   
 jobs:
   to_gitlab:
