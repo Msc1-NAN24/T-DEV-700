@@ -7,6 +7,7 @@
     "prepare": "prisma generate",
     "start": "node .",
     "build": "tsc",
+    "db:setup": "prisma migrate deploy",
     "dev": "nodemon src/index.ts",
     "lint": "prettier . --write"
   },

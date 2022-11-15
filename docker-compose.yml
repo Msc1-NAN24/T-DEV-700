@@ -1,9 +1,8 @@
-version: "3"
+version: "3.8"
 
 services:
-  postgres-db:
-    container_name: postgres-time-manager
-    image: postgres:alpine
+  postgres:
+    image: postgres
     environment:
       POSTGRES_USER: ${PGUSER}
       POSTGRES_PASSWORD: ${PGPASSWORD}
@@ -12,12 +11,11 @@ services:
       - 5432:5432
     volumes:
       - "db-data:/var/lib/postgresql/data"
-    networks:
-      - postgres-network
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
 
 volumes:
   db-data: {}
-
-networks:
-  postgres-network:
-    name: postgres-network
