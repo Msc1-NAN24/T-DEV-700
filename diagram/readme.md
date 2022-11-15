@@ -8,6 +8,10 @@ https://plantuml.com/fr/
 
 ![diagrame de class](./class.svg)
 
+# 1er esquisse du diagramme d'architecture
+
+![diagrame d'infrastucture](./architechture.svg)
+
 # exemple dans le md
 
 ```plantuml:md-sample-sequence

@@ -1,0 +1,22 @@
+@startuml
+
+() AppliMobile
+node bankServer
+database DB
+[4 ecran]
+
+bankServer -- DB
+AppliMobile - bankServer
+AppliMobile -- [4 ecran]
+
+[login]
+[produits]
+[Total Panier]
+[Payer Panier]
+
+[4 ecran] .. [login]
+[login] -> [produits]
+[produits] --> [Total Panier]
+[Payer Panier] - [Total Panier]
+
+@enduml
