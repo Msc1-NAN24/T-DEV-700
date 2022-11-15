@@ -18,7 +18,7 @@ jobs:
         with:
           source_dir: ./api
           output_dir: ./docs
-          config_file: ./api/jsdoc.conf.json
+          config_file: jsdoc.conf.json
           template: minami
           front_page: README.md
 
