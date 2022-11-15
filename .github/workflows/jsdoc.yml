@@ -17,7 +17,7 @@ jobs:
         uses: andstor/jsdoc-action@v1
         with:
           source_dir: ./api
-          output_dir: ./api/doc
+          output_dir: ./docs
           config_file: ./api/jsdoc.conf.json
           template: minami
           front_page: README.md
@@ -26,4 +26,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./api/doc
+          publish_dir: ./docs
