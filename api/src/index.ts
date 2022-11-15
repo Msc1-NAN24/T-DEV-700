@@ -6,7 +6,10 @@ const appEnv = dotenv.config();
 dotenvExpand.expand(appEnv);
 
 const app = express();
-
+/**
+ * @type void
+ * @return {number}
+ */
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });

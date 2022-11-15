@@ -1,10 +1,10 @@
 name: jsdoc
 on:
- push:
-   branches:
-     - master
-     - develop
- workflow_dispatch:
+  push:
+    branches:
+      - master
+      - develop
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -18,7 +18,7 @@ jobs:
         with:
           source_dir: ./api
           output_dir: ./api/doc
-          config_file: conf.json
+          config_file: ./api/jsdoc.conf.json
           template: minami
           front_page: README.md
 
