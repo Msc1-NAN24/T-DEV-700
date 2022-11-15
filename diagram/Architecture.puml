@@ -1,0 +1,21 @@
+@startuml Architecture
+
+() MobileApp
+node BankServer
+database Database
+[4 screens]
+
+BankServer -- Database
+MobileApp - BankServer
+MobileApp -- [4 screens]
+
+[Login]
+[Products]
+[Cart]
+[Payment]
+
+[4 screens] .. [Login]
+[Login] -> [Products]
+[Products] --> [Cart]
+[Payment] - [Cart]
+@enduml

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="388px" preserveAspectRatio="none" style="width:253px;height:388px;background:#FFFFFF;" version="1.1" viewBox="0 0 253 388" width="253px" zoomAndPan="magnify"><defs/><g><!--MD5=[0b23e3825ec464653af5665dda269e63]
+entity MobileApp--><g id="elem_MobileApp"><ellipse cx="71" cy="30.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="69" x="36.5" y="62.4659">MobileApp</text></g><!--MD5=[84cec7ed05c77d14f65b7b1cd1884118]
+entity BankServer--><g id="elem_BankServer"><polygon fill="#F1F1F1" points="122,16,132,6,236,6,236,45.0679,226,55.0679,122,55.0679,122,16" style="stroke:#181818;stroke-width:0.5;"/><line style="stroke:#181818;stroke-width:0.5;" x1="226" x2="236" y1="16" y2="6"/><line style="stroke:#181818;stroke-width:0.5;" x1="122" x2="226" y1="16" y2="16"/><line style="stroke:#181818;stroke-width:0.5;" x1="226" x2="226" y1="16" y2="55.0679"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="137" y="40.9659">BankServer</text></g><!--MD5=[fa1e3283224feb76407c84b7e90ed808]
+entity Database--><g id="elem_Database"><path d="M144,125.5 C144,115.5 186,115.5 186,115.5 C186,115.5 228,115.5 228,125.5 L228,153.5679 C228,163.5679 186,163.5679 186,163.5679 C186,163.5679 144,163.5679 144,153.5679 L144,125.5 " fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><path d="M144,125.5 C144,135.5 186,135.5 186,135.5 C186,135.5 228,135.5 228,125.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="64" x="154" y="154.4659">Database</text></g><!--MD5=[b16ab7ecc4b708083afa06a4a9d67c17]
+entity 4 screens--><g id="elem_4 screens"><rect fill="#F1F1F1" height="49.0679" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="102" x="7" y="115"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="89" y="120"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="87" y="122"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="87" y="126"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="62" x="22" y="149.9659">4 screens</text></g><!--MD5=[23689a62b5e80204d759960f89ec0344]
+entity Login--><g id="elem_Login"><rect fill="#F1F1F1" height="49.0679" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76" x="20" y="224"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="76" y="229"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="74" y="231"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="74" y="235"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="36" x="35" y="258.9659">Login</text></g><!--MD5=[2ff09eb542f7dc511dbd4d46f4900c31]
+entity Products--><g id="elem_Products"><rect fill="#F1F1F1" height="49.0679" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99" x="131.5" y="224"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="210.5" y="229"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="208.5" y="231"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="208.5" y="235"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="59" x="146.5" y="258.9659">Products</text></g><!--MD5=[76729866e8073ac2769573ac45e04328]
+entity Cart--><g id="elem_Cart"><rect fill="#F1F1F1" height="49.0679" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="68" x="147" y="333"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="195" y="338"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="193" y="340"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="193" y="344"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="28" x="162" y="367.9659">Cart</text></g><!--MD5=[1f684f0298694fdc450f2524689bdb7b]
+entity Payment--><g id="elem_Payment"><rect fill="#F1F1F1" height="49.0679" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99" x="12.5" y="333"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="91.5" y="338"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="89.5" y="340"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="89.5" y="344"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="59" x="27.5" y="367.9659">Payment</text></g><!--MD5=[6bf8587e263a2a526212fbc484136464]
+link BankServer to Database--><g id="link_BankServer_Database"><path d="M180.55,55.25 C181.72,73.1 183.31,97.44 184.47,115.19 " fill="none" id="BankServer-Database" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[016a9b7c9a186daa1bbf3429505ab92d]
+link MobileApp to BankServer--><g id="link_MobileApp_BankServer"><path d="M80.28,30.5 C94.16,30.5 108.05,30.5 121.93,30.5 " fill="none" id="MobileApp-BankServer" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[2aa63d991adde1a8e93df453ea98a05e]
+link MobileApp to 4 screens--><g id="link_MobileApp_4 screens"><path d="M70.02,39.54 C68.11,55.29 63.8,90.73 60.9,114.64 " fill="none" id="MobileApp-4 screens" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[f67e5b55ad3698a59f9119aa0dbd5af7]
+link 4 screens to Login--><g id="link_4 screens_Login"><path d="M58,164.25 C58,181.98 58,206.1 58,223.82 " fill="none" id="4 screens-Login" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/></g><!--MD5=[2e9260f6ca8a98e2ef5af3b0745e721c]
+link Login to Products--><g id="link_Login_Products"><path d="M96.44,248.5 C106.38,248.5 116.32,248.5 126.25,248.5 " fill="none" id="Login-to-Products" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="131.45,248.5,122.45,244.5,126.45,248.5,122.45,252.5,131.45,248.5" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[4f07c7d4bdff16429f0498245ca4f0ba]
+link Products to Cart--><g id="link_Products_Cart"><path d="M181,273.25 C181,289.32 181,310.64 181,327.68 " fill="none" id="Products-to-Cart" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="181,332.82,185,323.82,181,327.82,177,323.82,181,332.82" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[7889c7488ea9b15178d080c0a05a2876]
+link Payment to Cart--><g id="link_Payment_Cart"><path d="M111.74,357.5 C123.46,357.5 135.19,357.5 146.91,357.5 " fill="none" id="Payment-Cart" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[119c4c8b26c0c3e4a1f8fba1215cf061]
+@startuml Architecture
+
+() MobileApp
+node BankServer
+database Database
+[4 screens]
+
+BankServer - - Database
+MobileApp - BankServer
+MobileApp - - [4 screens]
+
+[Login]
+[Products]
+[Cart]
+[Payment]
+
+[4 screens] .. [Login]
+[Login] -> [Products]
+[Products] - -> [Cart]
+[Payment] - [Cart]
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 19:01:30 CEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: GB
+--></g></svg>

@@ -1,0 +1,32 @@
+@startuml Class
+class User {
+    - id: uuid
+    - firstName: string
+    - lastName: string
+    - username: string
+    - account_id: uuid
+    - is_admin: boolean
+}
+
+class Account {
+    - id: uuid
+    - credit_card_rfif: string
+    - cheque_uuid: string
+    - balance: number
+    - refusal_count: number
+    - ceiling: number
+    - max_overdraft: number
+    - created_at: date
+    - blocked: boolean
+}
+
+class Product {
+    - id: uuid
+    - name: string
+    - price: number
+    - description: string
+}
+
+User "1" -- "0..1" Account : has
+
+@enduml

@@ -1,18 +1,18 @@
-# doc pour les diagrammes puml :
+# PlantUML diagrams
 
-https://plantuml.com/fr/
+[Website](https://plantuml.com/)
 
-(installer `jebbs.plantuml` dans vscode)
+[Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml)
 
-# 1er esquice du diagrame de class
+## Class diagram
 
-![diagrame de class](./class.svg)
+![Diagram](./Database.svg)
 
-# 1er esquisse du diagramme d'architecture
+## Architecture diagram
 
 ![diagrame d'infrastucture](./architechture.svg)
 
-# exemple dans le md
+## Markdown integration example
 
 ```plantuml:md-sample-sequence
 @startuml
@@ -30,4 +30,4 @@ Foo1 -> Foo6 : To collections
 @enduml
 ```
 
-![exemple ramdom qui est au dessus](./md-sample-sequence.svg)
+![Above example](./md-sample-sequence.svg)
