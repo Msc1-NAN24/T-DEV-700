@@ -4,6 +4,7 @@
   "private": true,
   "main": "build/index.js",
   "scripts": {
+    "prepare": "prisma generate",
     "start": "node .",
     "build": "tsc",
     "dev": "nodemon src/index.ts",
