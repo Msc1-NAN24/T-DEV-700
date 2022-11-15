@@ -15,6 +15,7 @@ model User {
   firstName String
   lastName  String
   userName  String  @unique
+  password  String
   id_admin  Boolean @default(false)
 
   account Account?
