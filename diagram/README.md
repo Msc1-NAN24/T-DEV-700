@@ -16,4 +16,8 @@
 
 ![diagrame d'activité](./activity.svg)
 
-![Above example](./md-sample-sequence.svg)
+## Sequence diagram
+
+![diagrame de séquence](./sequence.svg)
+
+**WORK IN PROGRESS**
