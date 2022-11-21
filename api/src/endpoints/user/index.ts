@@ -1,6 +1,7 @@
 import { Request, Router } from "express";
 import { PrismaClient } from "@prisma/client";
 import { z, ZodError } from "zod";
+import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
 import { CustomResponse } from "../../types/response";
@@ -79,14 +80,20 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
       },
     });
 
+    const token = jwt.sign(
+      {
+        id: user.id,
+        username: user.username,
+      },
+      process.env.JWT_SECRET!,
+      {
+        expiresIn: "1d",
+      }
+    );
+
     return res.status(201).json({
       success: true,
-      data: {
-        username: user.username,
-        email: user.email,
-        first_name: user.first_name,
-        last_name: user.last_name,
-      },
+      data: { token },
     });
   } catch (err) {
     if (err instanceof ZodError) {
@@ -107,6 +114,89 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
           message: "Internal server error",
         });
       }
+    } else {
+      console.error(err);
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+      });
+    }
+  }
+});
+
+router.post("/login", async (req: Request, res: CustomResponse) => {
+  const bodyValidator = z.object({
+    username: z
+      .string({
+        required_error: "Username is required",
+        invalid_type_error: "Username must be a string",
+      })
+      .min(1, "Username must be at least 1 character long"),
+    password: z
+      .string({
+        required_error: "Password is required",
+        invalid_type_error: "Password must be a string",
+      })
+      .min(8, "Password must be at least 8 characters"),
+  });
+
+  try {
+    const body = bodyValidator.parse(req.body);
+
+    const user = await prisma.user.findUnique({
+      where: {
+        username: body.username,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const hashedPassword = crypto
+      .createHash("sha256")
+      .update(body.password)
+      .digest("hex");
+
+    if (user.password !== hashedPassword) {
+      return res.status(401).json({
+        success: false,
+        message: "Incorrect password",
+      });
+    }
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        username: user.username,
+      },
+      process.env.JWT_SECRET!,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        token,
+      },
+    });
+  } catch (err) {
+    if (err instanceof ZodError) {
+      return res.status(400).json({
+        success: false,
+        message: err.issues[0].message ?? "Invalid request",
+      });
+    } else if (err instanceof PrismaClientKnownRequestError) {
+      console.error(err);
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+      });
     } else {
       console.error(err);
       return res.status(500).json({
