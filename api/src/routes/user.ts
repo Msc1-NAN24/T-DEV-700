@@ -196,6 +196,75 @@ router
         message: "Unauthorized",
       });
     }
+  })
+  .delete(async (req: CustomRequest, res: CustomResponse) => {
+    if (req.userId) {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: req.userId,
+        },
+      });
+
+      if (user) {
+        const bodyValidator = z.object({
+          password: z.string({
+            required_error: "Your current password is required",
+            invalid_type_error: "Your current password must be a string",
+          }),
+        });
+
+        try {
+          const body = bodyValidator.parse(req.body);
+
+          // Verify current password
+          const validPassword = await bcrypt.compare(
+            body.password,
+            user.password
+          );
+
+          if (!validPassword) {
+            return res.status(401).json({
+              success: false,
+              message: "Incorrect password",
+            });
+          }
+
+          await prisma.user.delete({
+            where: {
+              id: req.userId,
+            },
+          });
+
+          return res.json({
+            success: true,
+            message: "User deleted",
+          });
+        } catch (err) {
+          if (err instanceof ZodError) {
+            return res.status(400).json({
+              success: false,
+              message: err.issues[0].message,
+            });
+          } else {
+            console.log(err);
+            return res.status(500).json({
+              success: false,
+              message: "Internal server error",
+            });
+          }
+        }
+      } else {
+        return res.status(404).json({
+          success: false,
+          message: "User not found",
+        });
+      }
+    } else {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
   });
 
 export default router;
