@@ -1,10 +1,10 @@
-import { Request, Router } from "express";
+import { Router, Request } from "express";
 import { PrismaClient } from "@prisma/client";
 import { z, ZodError } from "zod";
 import jwt from "jsonwebtoken";
-import crypto from "crypto";
+import bcrypt from "bcrypt";
 
-import { CustomResponse } from "../../types/response";
+import { CustomResponse } from "../types/response";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 const prisma = new PrismaClient();
@@ -58,9 +58,16 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
   });
 
   try {
-    const body = bodyValidator.parse(req.body);
+    const {
+      first_name,
+      last_name,
+      username,
+      email,
+      password,
+      confirm_password,
+    } = bodyValidator.parse(req.body);
 
-    if (body.password !== body.confirm_password) {
+    if (password !== confirm_password) {
       return res.status(400).json({
         success: false,
         message: "Passwords do not match",
@@ -69,20 +76,17 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
 
     const user = await prisma.user.create({
       data: {
-        first_name: body.first_name,
-        last_name: body.last_name,
-        username: body.username,
-        email: body.email,
-        password: crypto
-          .createHash("sha256")
-          .update(body.password)
-          .digest("hex"),
+        first_name,
+        last_name,
+        username,
+        email,
+        password: await bcrypt.hash(password, 10),
       },
     });
 
     const token = jwt.sign(
       {
-        id: user.id,
+        userId: user.id,
         username: user.username,
       },
       process.env.JWT_SECRET!,
@@ -156,10 +160,7 @@ router.post("/login", async (req: Request, res: CustomResponse) => {
       });
     }
 
-    const hashedPassword = crypto
-      .createHash("sha256")
-      .update(body.password)
-      .digest("hex");
+    const hashedPassword = user.password;
 
     if (user.password !== hashedPassword) {
       return res.status(401).json({
@@ -170,7 +171,7 @@ router.post("/login", async (req: Request, res: CustomResponse) => {
 
     const token = jwt.sign(
       {
-        id: user.id,
+        userId: user.id,
         username: user.username,
       },
       process.env.JWT_SECRET!,

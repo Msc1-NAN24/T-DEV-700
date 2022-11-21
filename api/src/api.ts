@@ -1,8 +1,10 @@
 import { Router } from "express";
-import user from "./endpoints/user";
+import auth from "./routes/authentication";
+import user from "./routes/user";
 
 const api = Router();
 
-api.use("/user", user);
+api.use("/", auth);
+api.use("/users", user);
 
-export default user;
+export default api;
