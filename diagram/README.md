@@ -12,6 +12,10 @@
 
 ![diagrame d'infrastucture](./architechture.svg)
 
+## activity diagram
+
+![diagrame d'activité](./activity.svg)
+
 ## Markdown integration example
 
 ```plantuml:md-sample-sequence
