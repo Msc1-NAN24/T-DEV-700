@@ -1,0 +1,38 @@
+@startuml
+
+actor client as cli
+entity appliaction as app
+entity TPE as tpe
+
+boundary "api produit" as apip
+
+boundary "api banque" as apib
+
+activate cli
+cli -> app : ouvre l'application
+activate app
+app -> apip : demande produit magasin
+activate apip
+apip -> app : retourne produit magasin
+deactivate apip
+app -> cli : affiche liste produit
+cli -> app : ajout des produit
+cli -> app : validation du panier
+app -> tpe : envoie montant payment
+activate tpe
+tpe -> cli : demande paiement
+cli -> tpe : paiement via NFC ou QR code
+tpe -> tpe : verification
+tpe -> apib : envoie transaction
+activate apib
+apib -> tpe : status transaction
+deactivate apib
+tpe -> cli : affiche message de status transaction
+tpe -> app : retourne status transaction
+deactivate tpe
+app -> apip : envoie status transaction
+app -> cli : affiche message de status transaction
+deactivate app
+
+
+@enduml
