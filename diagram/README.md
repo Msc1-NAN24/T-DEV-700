@@ -6,11 +6,11 @@
 
 ## Class diagram
 
-![Diagram](./Database.svg)
+![Diagram class](./Class.svg)
 
 ## Architecture diagram
 
-![diagrame d'infrastucture](./architechture.svg)
+![diagrame d'archi](./Architechture.svg)
 
 ## activity diagram
 
