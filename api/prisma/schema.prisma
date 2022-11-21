@@ -11,12 +11,12 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(uuid())
-  firstName String
-  lastName  String
-  userName  String  @unique
-  password  String
-  id_admin  Boolean @default(false)
+  id         String  @id @default(uuid())
+  first_name String
+  last_name  String
+  username   String  @unique
+  password   String
+  is_admin   Boolean @default(false)
 
   account Account?
 }
