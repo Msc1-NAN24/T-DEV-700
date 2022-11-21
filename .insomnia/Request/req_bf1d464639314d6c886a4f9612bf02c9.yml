@@ -1,0 +1,38 @@
+_id: req_bf1d464639314d6c886a4f9612bf02c9
+type: Request
+parentId: fld_12870ee8bd9d4a79a23c80cc986371a6
+modified: 1669045754637
+created: 1669045735236
+url: "{{ _.api_url }}/users/me"
+name: Edit user info
+description: ""
+method: PATCH
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"first_name": "test",
+    	"last_name": "test",
+    	"username": "test",
+    	"email": "test@test.com",
+    	"password": "T€st1234",
+    	"new_password": "T€st1234",
+    	"confirm_password": "T€st1234"
+    }
+parameters: []
+headers:
+  - id: pair_4a6f995f74e14f8cb82cf7109ff2a139
+    name: Authorization
+    value: Bearer {{ _.token }}
+    description: ""
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1668530771679.25
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
