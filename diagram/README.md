@@ -10,7 +10,7 @@
 
 ## Architecture diagram
 
-![diagrame d'archi](./Architechture.svg)
+![diagrame d'archi](./Architecture.svg)
 
 ## activity diagram
 
