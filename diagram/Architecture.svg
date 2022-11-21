@@ -1,17 +1,352 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="218px" preserveAspectRatio="none" style="width:715px;height:218px;background:#FFFFFF;" version="1.1" viewBox="0 0 715 218" width="715px" zoomAndPan="magnify"><defs/><g><!--MD5=[bd23615050115fe133bc3649d74764a9]
-cluster Serveur Bank--><g id="cluster_Serveur Bank"><path d="M8.5,6 L115.5,6 A3.75,3.75 0 0 1 118,8.5 L125,28.2969 L330.5,28.2969 A2.5,2.5 0 0 1 333,30.7969 L333,100.5 A2.5,2.5 0 0 1 330.5,103 L8.5,103 A2.5,2.5 0 0 1 6,100.5 L6,8.5 A2.5,2.5 0 0 1 8.5,6 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="6" x2="125" y1="28.2969" y2="28.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="106" x="10" y="20.9951">Serveur Bank</text></g><!--MD5=[99a204c5f8f2d6c3145f9226a2c24cd9]
-cluster Serveur Produit--><g id="cluster_Serveur Produit"><path d="M359.5,6 L486.5,6 A3.75,3.75 0 0 1 489,8.5 L496,28.2969 L705.5,28.2969 A2.5,2.5 0 0 1 708,30.7969 L708,100.5 A2.5,2.5 0 0 1 705.5,103 L359.5,103 A2.5,2.5 0 0 1 357,100.5 L357,8.5 A2.5,2.5 0 0 1 359.5,6 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="357" x2="496" y1="28.2969" y2="28.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="126" x="361" y="20.9951">Serveur Produit</text></g><!--MD5=[cbde932e1298cd09cd1f01256cabecb4]
-entity Bank_server--><g id="elem_Bank_server"><polygon fill="#F1F1F1" points="22,51,32,41,150,41,150,77.2969,140,87.2969,22,87.2969,22,51" style="stroke:#181818;stroke-width:0.5;"/><line style="stroke:#181818;stroke-width:0.5;" x1="140" x2="150" y1="51" y2="41"/><line style="stroke:#181818;stroke-width:0.5;" x1="22" x2="140" y1="51" y2="51"/><line style="stroke:#181818;stroke-width:0.5;" x1="140" x2="140" y1="51" y2="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="88" x="37" y="73.9951">Bank_server</text></g><!--MD5=[bc5e7c827b9057a9019ae61d5d0f7df7]
-entity Database_bank--><g id="elem_Database_bank"><path d="M185.5,51.5 C185.5,41.5 251,41.5 251,41.5 C251,41.5 316.5,41.5 316.5,51.5 L316.5,76.7969 C316.5,86.7969 251,86.7969 251,86.7969 C251,86.7969 185.5,86.7969 185.5,76.7969 L185.5,51.5 " fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><path d="M185.5,51.5 C185.5,61.5 251,61.5 251,61.5 C251,61.5 316.5,61.5 316.5,51.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="111" x="195.5" y="78.4951">Database_bank</text></g><!--MD5=[927944711e7d1b403027d1a9dbd84399]
-entity Product_server--><g id="elem_Product_server"><polygon fill="#F1F1F1" points="544,51,554,41,692,41,692,77.2969,682,87.2969,544,87.2969,544,51" style="stroke:#181818;stroke-width:0.5;"/><line style="stroke:#181818;stroke-width:0.5;" x1="682" x2="692" y1="51" y2="41"/><line style="stroke:#181818;stroke-width:0.5;" x1="544" x2="682" y1="51" y2="51"/><line style="stroke:#181818;stroke-width:0.5;" x1="682" x2="682" y1="51" y2="87.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="108" x="559" y="73.9951">Product_server</text></g><!--MD5=[13af67a7b134047c241209986ac77b58]
-entity Database_client--><g id="elem_Database_client"><path d="M373,51.5 C373,41.5 441,41.5 441,41.5 C441,41.5 509,41.5 509,51.5 L509,76.7969 C509,86.7969 441,86.7969 441,86.7969 C441,86.7969 373,86.7969 373,76.7969 L373,51.5 " fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><path d="M373,51.5 C373,61.5 441,61.5 441,61.5 C441,61.5 509,61.5 509,51.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="116" x="383" y="78.4951">Database_client</text></g><!--MD5=[4948930f1596c5d8726d63ecf9d06c18]
-entity TPE--><g id="elem_TPE"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="280.5" y="166"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="327.5" y="171"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="325.5" y="173"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="325.5" y="177"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="27" x="295.5" y="198.9951">TPE</text></g><!--MD5=[e5b7da8fa23ec8cac7d321a34f6e9ee1]
-entity Application--><g id="elem_Application"><rect fill="#F1F1F1" height="46.2969" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="123" x="442.5" y="166"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="545.5" y="171"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="543.5" y="173"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="543.5" y="177"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="83" x="457.5" y="198.9951">Application</text></g><!--MD5=[f54b856d737e19a91a501c9f3ca3cb80]
-link Bank_server to Database_bank--><g id="link_Bank_server_Database_bank"><path d="M150.131,64 C161.82,64 173.509,64 185.199,64 " fill="none" id="Bank_server-Database_bank" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[ef19f98b3746ec5c8c5b90359292c3fc]
-link Database_client to Product_server--><g id="link_Database_client_Product_server"><path d="M509.104,64 C520.73,64 532.357,64 543.984,64 " fill="none" id="Database_client-Product_server" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[413bd9ddd5f8e4efe20719c59a4bfaed]
-link Bank_server to TPE--><g id="link_Bank_server_TPE"><path d="M125.093,87.201 C138.638,94.822 153.948,103.355 168,111 C206.261,131.8168 250.558,155.0591 280.235,170.508 " fill="none" id="Bank_server-TPE" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="20" x="212" y="132.0669">API</text></g><!--MD5=[6cd097bbb69fbc50326cca3f81542ba5]
-link TPE to Application--><g id="link_TPE_Application"><path d="M347.531,189 C373.738,189 410.883,189 442.405,189 " fill="none" id="TPE-Application" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="35" x="377.5" y="182.0669">Serial</text></g><!--MD5=[2fcf72a5787743483a53b5c2bc20d5f2]
-link Product_server to Application--><g id="link_Product_server_Application"><path d="M597.355,87.274 C576.695,109.566 545.097,143.6583 524.491,165.8913 " fill="none" id="Product_server-Application" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="20" x="568" y="132.0669">API</text></g><!--MD5=[bd1194ce409bc27846903eab1df35a8c]
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        contentStyleType="text/css"
+        height="218px"
+        preserveAspectRatio="none"
+        style="width:715px;height:218px;background:#FFFFFF;"
+        version="1.1"
+        viewBox="0 0 715 218"
+        width="715px"
+        zoomAndPan="magnify"
+        >
+    <defs />
+    <g> <!--MD5=[bd23615050115fe133bc3649d74764a9]
+cluster Serveur Bank-->
+        <g id="cluster_Serveur Bank">
+            <path
+                    d="M8.5,6 L115.5,6 A3.75,3.75 0 0 1 118,8.5 L125,28.2969 L330.5,28.2969 A2.5,2.5 0 0 1 333,30.7969 L333,100.5 A2.5,2.5 0 0 1 330.5,103 L8.5,103 A2.5,2.5 0 0 1 6,100.5 L6,8.5 A2.5,2.5 0 0 1 8.5,6 "
+                    fill="none"
+                    style="stroke:#000000;stroke-width:1.5;"
+                    />
+            <line
+                    style="stroke:#000000;stroke-width:1.5;"
+                    x1="6"
+                    x2="125"
+                    y1="28.2969"
+                    y2="28.2969"
+                    />
+            <text
+                    fill="#000000"
+                    font-family="sans-serif"
+                    font-size="14"
+                    font-weight="bold"
+                    lengthAdjust="spacing"
+                    textLength="106"
+                    x="10"
+                    y="20.9951"
+                    >Serveur Bank</text>
+        </g> <!--MD5=[99a204c5f8f2d6c3145f9226a2c24cd9]
+cluster Serveur Produit-->
+        <g id="cluster_Serveur Produit">
+            <path
+                    d="M359.5,6 L486.5,6 A3.75,3.75 0 0 1 489,8.5 L496,28.2969 L705.5,28.2969 A2.5,2.5 0 0 1 708,30.7969 L708,100.5 A2.5,2.5 0 0 1 705.5,103 L359.5,103 A2.5,2.5 0 0 1 357,100.5 L357,8.5 A2.5,2.5 0 0 1 359.5,6 "
+                    fill="none"
+                    style="stroke:#000000;stroke-width:1.5;"
+                    />
+            <line
+                    style="stroke:#000000;stroke-width:1.5;"
+                    x1="357"
+                    x2="496"
+                    y1="28.2969"
+                    y2="28.2969"
+                    />
+            <text
+                    fill="#000000"
+                    font-family="sans-serif"
+                    font-size="14"
+                    font-weight="bold"
+                    lengthAdjust="spacing"
+                    textLength="126"
+                    x="361"
+                    y="20.9951"
+                    >Serveur Produit</text>
+        </g> <!--MD5=[cbde932e1298cd09cd1f01256cabecb4]
+entity Bank_server-->
+        <g id="elem_Bank_server">
+            <polygon
+                    fill="#F1F1F1"
+                    points="22,51,32,41,150,41,150,77.2969,140,87.2969,22,87.2969,22,51"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    />
+            <line
+                    style="stroke:#181818;stroke-width:0.5;"
+                    x1="140"
+                    x2="150"
+                    y1="51"
+                    y2="41"
+                    />
+            <line
+                    style="stroke:#181818;stroke-width:0.5;"
+                    x1="22"
+                    x2="140"
+                    y1="51"
+                    y2="51"
+                    />
+            <line
+                    style="stroke:#181818;stroke-width:0.5;"
+                    x1="140"
+                    x2="140"
+                    y1="51"
+                    y2="87.2969"
+                    />
+            <text
+                    fill="#000000"
+                    font-family="sans-serif"
+                    font-size="14"
+                    lengthAdjust="spacing"
+                    textLength="88"
+                    x="37"
+                    y="73.9951"
+                    >Bank_server</text>
+        </g> <!--MD5=[bc5e7c827b9057a9019ae61d5d0f7df7]
+entity Database_bank-->
+        <g id="elem_Database_bank">
+            <path
+                    d="M185.5,51.5 C185.5,41.5 251,41.5 251,41.5 C251,41.5 316.5,41.5 316.5,51.5 L316.5,76.7969 C316.5,86.7969 251,86.7969 251,86.7969 C251,86.7969 185.5,86.7969 185.5,76.7969 L185.5,51.5 "
+                    fill="#F1F1F1"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    />
+            <path
+                    d="M185.5,51.5 C185.5,61.5 251,61.5 251,61.5 C251,61.5 316.5,61.5 316.5,51.5 "
+                    fill="none"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    />
+            <text
+                    fill="#000000"
+                    font-family="sans-serif"
+                    font-size="14"
+                    lengthAdjust="spacing"
+                    textLength="111"
+                    x="195.5"
+                    y="78.4951"
+                    >Database_bank</text>
+        </g> <!--MD5=[927944711e7d1b403027d1a9dbd84399]
+entity Product_server-->
+        <g id="elem_Product_server">
+            <polygon
+                    fill="#F1F1F1"
+                    points="544,51,554,41,692,41,692,77.2969,682,87.2969,544,87.2969,544,51"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    />
+            <line
+                    style="stroke:#181818;stroke-width:0.5;"
+                    x1="682"
+                    x2="692"
+                    y1="51"
+                    y2="41"
+                    />
+            <line
+                    style="stroke:#181818;stroke-width:0.5;"
+                    x1="544"
+                    x2="682"
+                    y1="51"
+                    y2="51"
+                    />
+            <line
+                    style="stroke:#181818;stroke-width:0.5;"
+                    x1="682"
+                    x2="682"
+                    y1="51"
+                    y2="87.2969"
+                    />
+            <text
+                    fill="#000000"
+                    font-family="sans-serif"
+                    font-size="14"
+                    lengthAdjust="spacing"
+                    textLength="108"
+                    x="559"
+                    y="73.9951"
+                    >Product_server</text>
+        </g> <!--MD5=[13af67a7b134047c241209986ac77b58]
+entity Database_client-->
+        <g id="elem_Database_client">
+            <path
+                    d="M373,51.5 C373,41.5 441,41.5 441,41.5 C441,41.5 509,41.5 509,51.5 L509,76.7969 C509,86.7969 441,86.7969 441,86.7969 C441,86.7969 373,86.7969 373,76.7969 L373,51.5 "
+                    fill="#F1F1F1"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    />
+            <path
+                    d="M373,51.5 C373,61.5 441,61.5 441,61.5 C441,61.5 509,61.5 509,51.5 "
+                    fill="none"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    />
+            <text
+                    fill="#000000"
+                    font-family="sans-serif"
+                    font-size="14"
+                    lengthAdjust="spacing"
+                    textLength="116"
+                    x="383"
+                    y="78.4951"
+                    >Database_client</text>
+        </g> <!--MD5=[4948930f1596c5d8726d63ecf9d06c18]
+entity TPE-->
+        <g id="elem_TPE">
+            <rect
+                    fill="#F1F1F1"
+                    height="46.2969"
+                    rx="2.5"
+                    ry="2.5"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    width="67"
+                    x="280.5"
+                    y="166"
+                    />
+            <rect
+                    fill="#F1F1F1"
+                    height="10"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    width="15"
+                    x="327.5"
+                    y="171"
+                    />
+            <rect
+                    fill="#F1F1F1"
+                    height="2"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    width="4"
+                    x="325.5"
+                    y="173"
+                    />
+            <rect
+                    fill="#F1F1F1"
+                    height="2"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    width="4"
+                    x="325.5"
+                    y="177"
+                    />
+            <text
+                    fill="#000000"
+                    font-family="sans-serif"
+                    font-size="14"
+                    lengthAdjust="spacing"
+                    textLength="27"
+                    x="295.5"
+                    y="198.9951"
+                    >TPE</text>
+        </g> <!--MD5=[e5b7da8fa23ec8cac7d321a34f6e9ee1]
+entity Application-->
+        <g id="elem_Application">
+            <rect
+                    fill="#F1F1F1"
+                    height="46.2969"
+                    rx="2.5"
+                    ry="2.5"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    width="123"
+                    x="442.5"
+                    y="166"
+                    />
+            <rect
+                    fill="#F1F1F1"
+                    height="10"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    width="15"
+                    x="545.5"
+                    y="171"
+                    />
+            <rect
+                    fill="#F1F1F1"
+                    height="2"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    width="4"
+                    x="543.5"
+                    y="173"
+                    />
+            <rect
+                    fill="#F1F1F1"
+                    height="2"
+                    style="stroke:#181818;stroke-width:0.5;"
+                    width="4"
+                    x="543.5"
+                    y="177"
+                    />
+            <text
+                    fill="#000000"
+                    font-family="sans-serif"
+                    font-size="14"
+                    lengthAdjust="spacing"
+                    textLength="83"
+                    x="457.5"
+                    y="198.9951"
+                    >Application</text>
+        </g> <!--MD5=[f54b856d737e19a91a501c9f3ca3cb80]
+link Bank_server to Database_bank-->
+        <g id="link_Bank_server_Database_bank">
+            <path
+                    d="M150.131,64 C161.82,64 173.509,64 185.199,64 "
+                    fill="none"
+                    id="Bank_server-Database_bank"
+                    style="stroke:#181818;stroke-width:1.0;"
+                    />
+        </g> <!--MD5=[ef19f98b3746ec5c8c5b90359292c3fc]
+link Database_client to Product_server-->
+        <g id="link_Database_client_Product_server">
+            <path
+                    d="M509.104,64 C520.73,64 532.357,64 543.984,64 "
+                    fill="none"
+                    id="Database_client-Product_server"
+                    style="stroke:#181818;stroke-width:1.0;"
+                    />
+        </g> <!--MD5=[413bd9ddd5f8e4efe20719c59a4bfaed]
+link Bank_server to TPE-->
+        <g id="link_Bank_server_TPE">
+            <path
+                    d="M125.093,87.201 C138.638,94.822 153.948,103.355 168,111 C206.261,131.8168 250.558,155.0591 280.235,170.508 "
+                    fill="none"
+                    id="Bank_server-TPE"
+                    style="stroke:#181818;stroke-width:1.0;"
+                    />
+            <text
+                    fill="#000000"
+                    font-family="sans-serif"
+                    font-size="13"
+                    lengthAdjust="spacing"
+                    textLength="20"
+                    x="212"
+                    y="132.0669"
+                    >API</text>
+        </g> <!--MD5=[6cd097bbb69fbc50326cca3f81542ba5]
+link TPE to Application-->
+        <g id="link_TPE_Application">
+            <path
+                    d="M347.531,189 C373.738,189 410.883,189 442.405,189 "
+                    fill="none"
+                    id="TPE-Application"
+                    style="stroke:#181818;stroke-width:1.0;"
+                    />
+            <text
+                    fill="#000000"
+                    font-family="sans-serif"
+                    font-size="13"
+                    lengthAdjust="spacing"
+                    textLength="35"
+                    x="377.5"
+                    y="182.0669"
+                    >Serial</text>
+        </g> <!--MD5=[2fcf72a5787743483a53b5c2bc20d5f2]
+link Product_server to Application-->
+        <g id="link_Product_server_Application">
+            <path
+                    d="M597.355,87.274 C576.695,109.566 545.097,143.6583 524.491,165.8913 "
+                    fill="none"
+                    id="Product_server-Application"
+                    style="stroke:#181818;stroke-width:1.0;"
+                    />
+            <text
+                    fill="#000000"
+                    font-family="sans-serif"
+                    font-size="13"
+                    lengthAdjust="spacing"
+                    textLength="20"
+                    x="568"
+                    y="132.0669"
+                    >API</text>
+        </g> <!--MD5=[bd1194ce409bc27846903eab1df35a8c]
 @startuml
 package "Serveur Bank" {
     node Bank_server
@@ -41,4 +376,6 @@ JVM: Java HotSpot(TM) 64-Bit Server VM
 Default Encoding: UTF-8
 Language: en
 Country: US
---></g></svg>
+-->
+    </g>
+</svg>
