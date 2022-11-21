@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express from "express";
 import dotenv from "dotenv";
 import dotenvExpand from "dotenv-expand";
 
@@ -6,6 +6,7 @@ const appEnv = dotenv.config();
 dotenvExpand.expand(appEnv);
 
 const server = express();
+server.use(express.json());
 
 import api from "./api";
 server.use("/api", api);

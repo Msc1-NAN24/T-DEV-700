@@ -1,5 +1,5 @@
 import { Router } from "express";
-import user from "./user";
+import user from "./endpoints/user";
 
 const api = Router();
 
