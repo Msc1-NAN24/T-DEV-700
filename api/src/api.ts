@@ -1,10 +1,14 @@
 import { Router } from "express";
 import auth from "./routes/authentication";
-import user from "./routes/user";
+import users from "./routes/users";
+import accounts from "./routes/accounts";
+import transactions from "./routes/transactions";
 
 const api = Router();
 
-api.use("/", auth);
-api.use("/users", user);
+api.use(auth);
+api.use(users);
+api.use(accounts);
+api.use(transactions);
 
 export default api;

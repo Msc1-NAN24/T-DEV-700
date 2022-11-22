@@ -23,6 +23,7 @@ export default function authorization(
       }
       req.userId = (user as any).userId;
       req.username = (user as any).username;
+      req.userAdmin = (user as any).admin;
       next();
     });
   } else {

@@ -1,17 +1,20 @@
 import { Router } from "express";
 import { PrismaClient, User } from "@prisma/client";
+import { z, ZodError } from "zod";
+import bcrypt from "bcrypt";
+
 import authorization from "../middleware/authorization";
 import { CustomRequest } from "../types/request";
 import { CustomResponse } from "../types/response";
-import { z, ZodError } from "zod";
-import bcrypt from "bcrypt";
+
+import accounts from "./transactions";
 
 const prisma = new PrismaClient();
 
 const router = Router();
 
 router
-  .route("/me")
+  .route("/users/me")
   .all(authorization)
   .get(async (req: CustomRequest, res: CustomResponse) => {
     if (req.userId) {
@@ -22,7 +25,7 @@ router
       });
 
       if (user) {
-        return res.json({
+        res.json({
           success: true,
           data: {
             id: user.id,
@@ -31,13 +34,13 @@ router
           },
         });
       } else {
-        return res.status(404).json({
+        res.status(404).json({
           success: false,
           message: "User not found",
         });
       }
     } else {
-      return res.status(401).json({
+      res.status(401).json({
         success: false,
         message: "Unauthorized",
       });
@@ -111,7 +114,7 @@ router
           );
 
           if (!validPassword) {
-            return res.status(401).json({
+            res.status(401).json({
               success: false,
               message: "Incorrect password",
             });
@@ -137,14 +140,14 @@ router
 
           if (body.new_password) {
             if (!body.confirm_password) {
-              return res.status(400).json({
+              res.status(400).json({
                 success: false,
                 message: "Password confirmation is required",
               });
             }
 
             if (body.new_password !== body.confirm_password) {
-              return res.status(400).json({
+              res.status(400).json({
                 success: false,
                 message: "Passwords do not match",
               });
@@ -160,7 +163,7 @@ router
             data,
           });
 
-          return res.json({
+          res.json({
             success: true,
             data: {
               id: updatedUser.id,
@@ -172,26 +175,26 @@ router
           });
         } catch (err) {
           if (err instanceof ZodError) {
-            return res.status(400).json({
+            res.status(400).json({
               success: false,
               message: err.issues[0].message,
             });
           } else {
             console.log(err);
-            return res.status(500).json({
+            res.status(500).json({
               success: false,
               message: "Internal server error",
             });
           }
         }
       } else {
-        return res.status(404).json({
+        res.status(404).json({
           success: false,
           message: "User not found",
         });
       }
     } else {
-      return res.status(401).json({
+      res.status(401).json({
         success: false,
         message: "Unauthorized",
       });
@@ -223,7 +226,7 @@ router
           );
 
           if (!validPassword) {
-            return res.status(401).json({
+            res.status(401).json({
               success: false,
               message: "Incorrect password",
             });
@@ -235,36 +238,41 @@ router
             },
           });
 
-          return res.json({
+          res.json({
             success: true,
             message: "User deleted",
           });
         } catch (err) {
           if (err instanceof ZodError) {
-            return res.status(400).json({
+            res.status(400).json({
               success: false,
               message: err.issues[0].message,
             });
           } else {
             console.log(err);
-            return res.status(500).json({
+            res.status(500).json({
               success: false,
               message: "Internal server error",
             });
           }
         }
       } else {
-        return res.status(404).json({
+        res.status(404).json({
           success: false,
           message: "User not found",
         });
       }
     } else {
-      return res.status(401).json({
+      res.status(401).json({
         success: false,
         message: "Unauthorized",
       });
     }
   });
+
+router
+  .route("/users/:id")
+  .all(authorization)
+  .get(async (req: CustomRequest, res: CustomResponse) => {});
 
 export default router;
