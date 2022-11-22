@@ -2,18 +2,16 @@ import express from "express";
 import dotenv from "dotenv";
 import dotenvExpand from "dotenv-expand";
 
+import api from "./api";
+
 const appEnv = dotenv.config();
 dotenvExpand.expand(appEnv);
 
-const app = express();
-/**
- * @type void
- * @return {number}
- */
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+const server = express();
+server.use(express.json());
 
-app.listen(process.env.APP_PORT, () => {
-  console.log("Example app listening on port 3000!");
+server.use("/api", api);
+
+server.listen(process.env.APP_PORT, () => {
+  console.log(`🚀 Server listening on port ${process.env.APP_PORT}`);
 });

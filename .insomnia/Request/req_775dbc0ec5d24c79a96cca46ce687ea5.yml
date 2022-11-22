@@ -1,0 +1,32 @@
+_id: req_775dbc0ec5d24c79a96cca46ce687ea5
+type: Request
+parentId: fld_12870ee8bd9d4a79a23c80cc986371a6
+modified: 1669045775104
+created: 1669045761687
+url: "{{ _.api_url }}/users/me"
+name: Delete user
+description: ""
+method: DELETE
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"password": "T€st1234"
+    }
+parameters: []
+headers:
+  - id: pair_4a6f995f74e14f8cb82cf7109ff2a139
+    name: Authorization
+    value: Bearer {{ _.token }}
+    description: ""
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1668494010244.625
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

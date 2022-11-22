@@ -13,7 +13,7 @@ link MobileApp to 4 screens--><g id="link_MobileApp_4 screens"><path d="M66.9507
 link 4 screens to Login--><g id="link_4 screens_Login"><path d="M60.5,158.056 C60.5,175.705 60.5,200.335 60.5,217.976 " fill="none" id="4 screens-Login" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/></g><!--MD5=[2e9260f6ca8a98e2ef5af3b0745e721c]
 link Login to Products--><g id="link_Login_Products"><path d="M100.3672,241 C110.109,241 119.85,241 129.592,241 " fill="none" id="Login-to-Products" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="134.686,241,125.686,237,129.686,241,125.686,245,134.686,241" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[4f07c7d4bdff16429f0498245ca4f0ba]
 link Products to Cart--><g id="link_Products_Cart"><path d="M186.5,264.056 C186.5,280.0503 186.5,301.7785 186.5,318.8418 " fill="none" id="Products-to-Cart" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="186.5,323.9761,190.5,314.9761,186.5,318.9761,182.5,314.9761,186.5,323.9761" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[7889c7488ea9b15178d080c0a05a2876]
-link Payment to Cart--><g id="link_Payment_Cart"><path d="M115.871,347 C127.551,347 139.23,347 150.91,347 " fill="none" id="Payment-Cart" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[55ffbdd1191e9577bdd78e7c7741cbdd]
+link Payment to Cart--><g id="link_Payment_Cart"><path d="M115.871,347 C127.551,347 139.23,347 150.91,347 " fill="none" id="Payment-Cart" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[1d1f89c881f6ca4bfefc4c16d8bd9c79]
 @startuml
 () MobileApp
 node BankServer
@@ -35,7 +35,7 @@ MobileApp - - [4 screens]
 [Payment] - [Cart]
 @enduml
 
-PlantUML version 1.2022.13beta7(Unknown compile time)
+PlantUML version 1.2022.13beta8(Unknown compile time)
 (GPL source distribution)
 Java Runtime: Java(TM) SE Runtime Environment
 JVM: Java HotSpot(TM) 64-Bit Server VM

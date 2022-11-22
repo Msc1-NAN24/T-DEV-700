@@ -1,11 +1,24 @@
 _id: env_3a18667e77f9939bfe1b2ee95de805f191063d72
 type: Environment
 parentId: wrk_443748e8d3d540f58944e38a06b8c46f
-modified: 1669024150665
+modified: 1669045714341
 created: 1669024150665
 name: Base Environment
-data: {}
-dataPropertyOrder: null
+data:
+  protocol: http
+  host: localhost
+  port: "3000"
+  api_base: api
+  api_url: "{{ _.protocol }}://{{ _.host }}:{{ _.port }}/{{ _.api_base }}"
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ZDc5NmU0OS03NDY0LTRhZTgtOGQyMi0wNzE3MWYwNGYwOTIiLCJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE2NjkwNDU2NDUsImV4cCI6MTY2OTEzMjA0NX0.JRZ-pQ8nCP7mrdxzSHnXiIu7RHlsRvEv7Vo08z_7-2M
+dataPropertyOrder:
+  "&":
+    - protocol
+    - host
+    - port
+    - api_base
+    - api_url
+    - token
 color: null
 isPrivate: false
 metaSortKey: 1669024150665
