@@ -19,5 +19,3 @@
 ## Sequence diagram
 
 ![diagrame de séquence](./sequence.svg)
-
-**WORK IN PROGRESS**

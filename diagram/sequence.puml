@@ -1,7 +1,7 @@
-@startuml
+@startuml sequence
 
 actor client as cli
-entity appliaction as app
+entity application as app
 entity TPE as tpe
 
 boundary "api produit" as apip
