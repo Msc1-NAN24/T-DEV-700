@@ -68,7 +68,7 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
     } = bodyValidator.parse(req.body);
 
     if (password !== confirm_password) {
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         message: "Passwords do not match",
       });
@@ -81,6 +81,9 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
         username,
         email,
         password: await bcrypt.hash(password, 10),
+        account: {
+          create: {},
+        },
       },
     });
 
@@ -88,6 +91,7 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
       {
         userId: user.id,
         username: user.username,
+        admin: user.is_admin,
       },
       process.env.JWT_SECRET!,
       {
@@ -95,32 +99,32 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
       }
     );
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
       data: { token },
     });
   } catch (err) {
     if (err instanceof ZodError) {
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         message: err.issues[0].message ?? "Invalid request",
       });
     } else if (err instanceof PrismaClientKnownRequestError) {
       if (err.code === "P2002") {
-        return res.status(409).json({
+        res.status(409).json({
           success: false,
           message: "Username or email already exists",
         });
       } else {
         console.error(err);
-        return res.status(500).json({
+        res.status(500).json({
           success: false,
           message: "Internal server error",
         });
       }
     } else {
       console.error(err);
-      return res.status(500).json({
+      res.status(500).json({
         success: false,
         message: "Internal server error",
       });
@@ -154,16 +158,17 @@ router.post("/login", async (req: Request, res: CustomResponse) => {
     });
 
     if (!user) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: "User not found",
       });
+      return;
     }
 
     const hashedPassword = user.password;
 
     if (user.password !== hashedPassword) {
-      return res.status(401).json({
+      res.status(401).json({
         success: false,
         message: "Incorrect password",
       });
@@ -173,6 +178,7 @@ router.post("/login", async (req: Request, res: CustomResponse) => {
       {
         userId: user.id,
         username: user.username,
+        admin: user.is_admin,
       },
       process.env.JWT_SECRET!,
       {
@@ -180,7 +186,7 @@ router.post("/login", async (req: Request, res: CustomResponse) => {
       }
     );
 
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
       data: {
         token,
@@ -188,19 +194,19 @@ router.post("/login", async (req: Request, res: CustomResponse) => {
     });
   } catch (err) {
     if (err instanceof ZodError) {
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         message: err.issues[0].message ?? "Invalid request",
       });
     } else if (err instanceof PrismaClientKnownRequestError) {
       console.error(err);
-      return res.status(500).json({
+      res.status(500).json({
         success: false,
         message: "Internal server error",
       });
     } else {
       console.error(err);
-      return res.status(500).json({
+      res.status(500).json({
         success: false,
         message: "Internal server error",
       });
