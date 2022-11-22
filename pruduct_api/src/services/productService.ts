@@ -6,7 +6,6 @@ export default class ProductService {
     const product = await prisma.product.create({
       data: { ...newProduct },
     });
-    console.log("create", { product });
     return product;
   };
 
@@ -17,7 +16,7 @@ export default class ProductService {
   };
 
   getById = async (id: string) => {
-    const product = await prisma.product.findMany();
+    const product = await prisma.product.findFirst({ where: { id } });
     return product;
   };
 
@@ -31,7 +30,7 @@ export default class ProductService {
     return product;
   };
 
-  deleteProduct = async (id: string, productUpdate: Partial<Product>) => {
+  deleteProduct = async (id: string) => {
     const product = await prisma.product.delete({
       where: {
         id,

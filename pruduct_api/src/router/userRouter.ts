@@ -112,7 +112,7 @@ router.post("/", async (req: Request, res: CustomResponse) => {
 });
 
 router.patch("/:id", async (req: Request, res: CustomResponse) => {
-  const bodyValidator = UserModel.required();
+  const bodyValidator = UserModel.partial();
   try {
     const { id } = req.params;
     const body = bodyValidator.parse(req.body);

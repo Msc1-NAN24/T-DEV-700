@@ -7,24 +7,6 @@ import { z } from "zod";
 const router = Router();
 const productService = new ProductService();
 
-router.get("/", async (req: Request, res: CustomResponse) => {
-  try {
-    const products = await productService.getAll();
-    console.log(products);
-
-    return res.status(200).json({
-      success: true,
-      data: products,
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: "Internal Error",
-    });
-  }
-});
-
 router.get("/:id", async (req: Request, res: CustomResponse) => {
   try {
     const { id } = req.params;
@@ -49,6 +31,23 @@ router.get("/:id", async (req: Request, res: CustomResponse) => {
   }
 });
 
+router.get("/", async (req: Request, res: CustomResponse) => {
+  try {
+    const products = await productService.getAll();
+
+    return res.status(200).json({
+      success: true,
+      data: products,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Error",
+    });
+  }
+});
+
 router.post("/", async (req: Request, res: CustomResponse) => {
   const bodyValidator = z.object({
     name: z.string(),
@@ -59,12 +58,48 @@ router.post("/", async (req: Request, res: CustomResponse) => {
   try {
     const body = bodyValidator.parse(req.body);
     const product = await productService.create(body);
-    return res.status(204).json({
+    console.log(product);
+
+    return res.status(201).json({
       success: true,
       data: product,
     });
   } catch (error) {
     console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Error",
+    });
+  }
+});
+
+router.patch("/:id", async (req: Request, res: CustomResponse) => {
+  const bodyValidator = ProductModel.partial();
+
+  try {
+    const { id } = req.params;
+    const body = bodyValidator.parse(req.body);
+    const product = productService.update(id, body);
+    return res.status(200).json({
+      success: true,
+      data: product,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal Error",
+    });
+  }
+});
+router.delete("/:id", async (req: Request, res: CustomResponse) => {
+  try {
+    const { id } = req.params;
+    const product = await productService.deleteProduct(id);
+    return res.status(200).json({
+      success: true,
+      data: product,
+    });
+  } catch (error) {
     return res.status(500).json({
       success: false,
       message: "Internal Error",
