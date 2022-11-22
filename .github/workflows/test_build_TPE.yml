@@ -32,6 +32,9 @@ jobs:
       - name: Install PlatformIO
         run: pip install platformio
 
+      - name: Go to TPE
+        run: cd TPE
+
       - name: Build the project
         run: platformio run
 
