@@ -58,7 +58,6 @@ router.post("/", async (req: Request, res: CustomResponse) => {
   try {
     const body = bodyValidator.parse(req.body);
     const product = await productService.create(body);
-    console.log(product);
 
     return res.status(201).json({
       success: true,
