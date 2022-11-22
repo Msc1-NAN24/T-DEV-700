@@ -4,10 +4,10 @@
   "private": true,
   "main": "build/index.js",
   "scripts": {
-    "prepare": "prisma generate",
+    "prepare": "prisma migrate deploy",
     "start": "node .",
     "build": "tsc",
-    "db:setup": "prisma migrate deploy",
+    "db:reset": "prisma migrate reset --force",
     "dev": "nodemon src/index.ts",
     "lint": "prettier . --write"
   },
