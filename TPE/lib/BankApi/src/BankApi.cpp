@@ -27,6 +27,7 @@ bool BankApi::receiveFrom(String userID, int amount) {
         Serial.println(this->http->getString());
         sortie = false;
     }
+    //TODO: fair un else if code si test pas connecter lancer login et si login ok relancer receiveFrom et return son resultat
     this->http->end();
     return sortie;
 }
