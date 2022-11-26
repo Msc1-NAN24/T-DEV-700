@@ -2,8 +2,7 @@
 #define BANK_API_H
 
 #include <Arduino.h>
-#include <ESP8266HTTPClient.h>
-//TODO: chager pour l'esp32
+#include <HTTPClient.h>
 
 #include <WiFiClient.h>
 

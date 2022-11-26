@@ -16,7 +16,7 @@ BankApi::BankApi(String ip, int port, String user, String password) {
 
 bool BankApi::receiveFrom(String userID, int amount) {
     bool sortie = true;
-    this->http->begin(*this->client, this->ip, this->port, "/api/users/" + userID + URL_PAYMENT);
+    this->http->begin(*this->client, this->ip, this->port, URL_USER + userID + URL_PAYMENT);
     this->http->addHeader("Authorization", "Bearer " + this->token);
     this->http->addHeader("Content-Type", "application/json");
     int resp = this->http->POST("{\"amount\": " + String(amount) + "}");
@@ -26,7 +26,7 @@ bool BankApi::receiveFrom(String userID, int amount) {
         Serial.println(this->http->errorToString(resp));
         Serial.println(this->http->getString());
         sortie = false;
-    }
+    } //else if (resp == ){}
     //TODO: fair un else if code si test pas connecter lancer login et si login ok relancer receiveFrom et return son resultat
     this->http->end();
     return sortie;
