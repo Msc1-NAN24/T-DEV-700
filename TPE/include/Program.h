@@ -2,6 +2,7 @@
 #define PROGRAM_H
 
 #include "Arduino.h"
+#include "BankApi.h"
 
 class Program {
 public:
