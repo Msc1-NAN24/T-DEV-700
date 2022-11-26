@@ -14,6 +14,9 @@ public:
      * Program main loop
      */
     void loop();
+
+private:
+    BankApi* bank;
 };
 
 #endif
