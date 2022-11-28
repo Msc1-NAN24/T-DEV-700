@@ -23,6 +23,12 @@ public:
      */
     void printAmount(int amount);
 
+
+    void validateAnimation();
+
+
+    void process();
+
 private:
 
     Adafruit_SSD1306* display;
