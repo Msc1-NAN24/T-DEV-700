@@ -39,4 +39,7 @@ jobs:
           platformio run
 
       - name: Test the project
-        run: platformio check --fail-on-defect high
+        run: |
+          cd TPE
+          mv secrets.ini.example secrets.ini
+          platformio check --fail-on-defect high
