@@ -62,3 +62,7 @@ void OledScreen::validateAnimation() {
     this->display->println();
     this->display->display();
 }
+
+void OledScreen::clear() {
+    this->display->clearDisplay();
+}

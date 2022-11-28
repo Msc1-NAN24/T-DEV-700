@@ -23,11 +23,20 @@ public:
      */
     void printAmount(int amount);
 
-
+    /**
+     * @brief Run the validation animation
+     */
     void validateAnimation();
 
-
+    /**
+     * @brief Run the process animation
+     */
     void process();
+
+    /**
+     * @brief Clear the screen
+     */
+    void clear();
 
 private:
 
