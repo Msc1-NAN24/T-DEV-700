@@ -6,6 +6,7 @@
 
 #include "Arduino.h"
 #include "BankApi.h"
+#include "OledScreen.h"
 #include "NfcModule.h"
 
 class Program {
@@ -22,6 +23,7 @@ public:
 
 private:
     BankApi* bank;
+    OledScreen* screen;
 
     NfcModule* NFC;
 };
