@@ -16,4 +16,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
-CMD [ "node", "build" ]
+CMD sh start.sh
