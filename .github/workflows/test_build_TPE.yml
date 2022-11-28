@@ -35,6 +35,7 @@ jobs:
       - name: Build the project
         run: |
           cd TPE
+          mv secrets.ini.example secrets.ini
           platformio run
 
       - name: Test the project
