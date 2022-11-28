@@ -1,15 +1,34 @@
-version: "3.8"
+version: "3"
 
 services:
+
   postgres:
-    image: postgres
+    image: 'postgres:latest'
+    container_name: postgres
     environment:
       POSTGRES_USER: ${PGUSER}
       POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: cashmanager
     ports:
       - 5432:5432
     volumes:
       - "./data:/var/lib/postgresql/data"
+
+  node:
+    container_name: API
+    build: 
+      context : ./api
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+
+      POSTGRES_HOST: postgres
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+
   adminer:
     image: adminer
     restart: always
