@@ -6,6 +6,7 @@
 
 #include "Arduino.h"
 #include "BankApi.h"
+#include "OledScreen.h"
 
 class Program {
 public:
@@ -21,6 +22,8 @@ public:
 
 private:
     BankApi* bank;
+    OledScreen* screen;
+
 };
 
 #endif
