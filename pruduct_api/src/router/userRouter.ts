@@ -5,7 +5,6 @@ import { CustomResponse } from "../types/response";
 import { z, ZodError } from "zod";
 import crypto from "crypto";
 import { User } from "@prisma/client";
-import { UserModel } from "../../prisma/zod";
 
 const router = Router();
 const userService = new UserService();
@@ -112,7 +111,24 @@ router.post("/", async (req: Request, res: CustomResponse) => {
 });
 
 router.patch("/:id", async (req: Request, res: CustomResponse) => {
-  const bodyValidator = UserModel.partial();
+  const bodyValidator = z.object({
+    username: z
+      .string({
+        invalid_type_error: "Username must be a string",
+      })
+      .regex(
+        /^[a-zA-Z0-9_]{3,16}$/,
+        "Username must be between 3 and 16 characters and can only contain letters, numbers and underscores"
+      )
+      .optional(),
+    email: z
+      .string({
+        required_error: "Email is required",
+        invalid_type_error: "Email must be a string",
+      })
+      .email("Invalid email address")
+      .optional(),
+  });
   try {
     const { id } = req.params;
     const body = bodyValidator.parse(req.body);
