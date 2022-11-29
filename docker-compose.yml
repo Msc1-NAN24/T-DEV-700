@@ -1,9 +1,8 @@
 version: "3"
 
 services:
-
   postgres:
-    image: 'postgres:latest'
+    image: "postgres:latest"
     container_name: postgres
     environment:
       POSTGRES_USER: ${PGUSER}
@@ -16,8 +15,8 @@ services:
 
   node:
     container_name: API
-    build: 
-      context : ./api
+    build:
+      context: ./api
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${PGUSER}
@@ -26,6 +25,21 @@ services:
       POSTGRES_HOST: postgres
     ports:
       - 3000:3000
+    depends_on:
+      - postgres
+
+  product:
+    container_name: API_Product
+    build:
+      context: ./product_api
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+
+      POSTGRES_HOST: postgres
+    ports:
+      - 3001:3001
     depends_on:
       - postgres
 
