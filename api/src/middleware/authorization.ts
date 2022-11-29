@@ -1,5 +1,7 @@
 import { NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { z } from "zod";
+import { CustomError } from "../types/error";
 import { CustomRequest } from "../types/request";
 import { CustomResponse } from "../types/response";
 
@@ -11,25 +13,32 @@ export default function authorization(
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.JWT_SECRET!, (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET!, (err, payload) => {
       if (err) {
         console.log(err);
-
-        res.status(401).json({
-          success: false,
-          message: "Unauthorized",
-        });
-        return;
+        throw CustomError.unauthorized();
       }
-      req.userId = (user as any).userId;
-      req.username = (user as any).username;
-      req.userAdmin = (user as any).admin;
+
+      try {
+        const payloadValidator = z.object({
+          userId: z.string().uuid(),
+          username: z.string(),
+          admin: z.boolean(),
+        });
+
+        const parsedPayload = payloadValidator.parse(payload);
+
+        req.userId = parsedPayload.userId;
+        req.username = parsedPayload.username;
+        req.userAdmin = parsedPayload.admin;
+      } catch (error) {
+        console.log(error);
+        throw CustomError.unauthorized();
+      }
+
       next();
     });
   } else {
-    res.status(400).json({
-      success: false,
-      message: "Missing authorization header",
-    });
+    throw CustomError.badRequest("Missing authorization header");
   }
 }

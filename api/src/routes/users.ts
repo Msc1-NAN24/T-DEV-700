@@ -7,7 +7,7 @@ import authorization from "../middleware/authorization";
 import { CustomRequest } from "../types/request";
 import { CustomResponse } from "../types/response";
 
-import accounts from "./transactions";
+import { CustomError } from "../types/error";
 
 const prisma = new PrismaClient();
 
@@ -18,31 +18,43 @@ router
   .all(authorization)
   .get(async (req: CustomRequest, res: CustomResponse) => {
     if (req.userId) {
-      const user = await prisma.user.findUnique({
-        where: {
-          id: req.userId,
-        },
-      });
-
-      if (user) {
-        res.json({
-          success: true,
-          data: {
-            id: user.id,
-            username: user.username,
-            email: user.email,
+      try {
+        const user = await prisma.user.findUnique({
+          where: {
+            id: req.userId,
           },
         });
-      } else {
-        res.status(404).json({
-          success: false,
-          message: "User not found",
-        });
+
+        if (user) {
+          res.json({
+            success: true,
+            data: {
+              id: user.id,
+              username: user.username,
+              email: user.email,
+            },
+          });
+        } else {
+          throw CustomError.notFound("User not found");
+        }
+      } catch (error) {
+        console.log(error);
+        if (error instanceof CustomError) {
+          res.status(error.statusCode).json({
+            success: false,
+            error: error.message,
+          });
+        } else {
+          res.status(500).json({
+            success: false,
+            error: "Internal server error",
+          });
+        }
       }
     } else {
       res.status(401).json({
         success: false,
-        message: "Unauthorized",
+        error: "Unauthorized",
       });
     }
   })
@@ -114,10 +126,7 @@ router
           );
 
           if (!validPassword) {
-            res.status(401).json({
-              success: false,
-              message: "Incorrect password",
-            });
+            throw CustomError.badRequest("Invalid password");
           }
 
           const data: Partial<User> = {};
@@ -140,17 +149,11 @@ router
 
           if (body.new_password) {
             if (!body.confirm_password) {
-              res.status(400).json({
-                success: false,
-                message: "Password confirmation is required",
-              });
+              throw CustomError.badRequest("Password confirmation is required");
             }
 
             if (body.new_password !== body.confirm_password) {
-              res.status(400).json({
-                success: false,
-                message: "Passwords do not match",
-              });
+              throw CustomError.badRequest("Passwords do not match");
             }
 
             data.password = await bcrypt.hash(body.new_password, 10);
@@ -177,26 +180,30 @@ router
           if (err instanceof ZodError) {
             res.status(400).json({
               success: false,
-              message: err.issues[0].message,
+              error: err.message,
+            });
+          } else if (err instanceof CustomError) {
+            res.status(err.statusCode).json({
+              success: false,
+              error: err.message,
             });
           } else {
-            console.log(err);
             res.status(500).json({
               success: false,
-              message: "Internal server error",
+              error: "Internal server error",
             });
           }
         }
       } else {
         res.status(404).json({
           success: false,
-          message: "User not found",
+          error: "User not found",
         });
       }
     } else {
       res.status(401).json({
         success: false,
-        message: "Unauthorized",
+        error: "Unauthorized",
       });
     }
   })
@@ -226,10 +233,7 @@ router
           );
 
           if (!validPassword) {
-            res.status(401).json({
-              success: false,
-              message: "Incorrect password",
-            });
+            throw CustomError.badRequest("Invalid password");
           }
 
           await prisma.user.delete({
@@ -240,32 +244,36 @@ router
 
           res.json({
             success: true,
-            message: "User deleted",
+            error: "User deleted",
           });
         } catch (err) {
           if (err instanceof ZodError) {
             res.status(400).json({
               success: false,
-              message: err.issues[0].message,
+              error: err.message,
+            });
+          } else if (err instanceof CustomError) {
+            res.status(err.statusCode).json({
+              success: false,
+              error: err.message,
             });
           } else {
-            console.log(err);
             res.status(500).json({
               success: false,
-              message: "Internal server error",
+              error: "Internal server error",
             });
           }
         }
       } else {
         res.status(404).json({
           success: false,
-          message: "User not found",
+          error: "User not found",
         });
       }
     } else {
       res.status(401).json({
         success: false,
-        message: "Unauthorized",
+        error: "Unauthorized",
       });
     }
   });

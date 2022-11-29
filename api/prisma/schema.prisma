@@ -43,10 +43,8 @@ model Account {
 model Transaction {
   id String @id @default(uuid())
 
-  amount        Int
-  is_successful Boolean @default(false)
-  is_refused    Boolean @default(false)
-  is_overdraft  Boolean @default(false)
+  amount Int
+  status TransactionStatus @default(PENDING)
 
   created_at DateTime @default(now())
 
@@ -55,4 +53,11 @@ model Transaction {
 
   receiver    Account? @relation(fields: [receiver_id], references: [id], name: "receiver")
   receiver_id String?
+}
+
+enum TransactionStatus {
+  PENDING
+  ACCEPTED
+  OVERDRAFT
+  REFUSED
 }
