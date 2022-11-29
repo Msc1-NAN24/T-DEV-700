@@ -23,15 +23,15 @@ model Item {
   product  String
   price    Float
   quantity Int
-  order    Order?  @relation(fields: [orderId], references: [id])
+  order    Order?  @relation(fields: [orderId], references: [id], name: "order")
   orderId  String?
 }
 
 model Order {
   id      String  @id @default(uuid())
-  product Item[]
+  product Item[]  @relation(name: "order")
   price   Float
-  user    User?   @relation(fields: [userId], references: [id])
+  user    User?   @relation(fields: [userId], references: [id], name: "user")
   userId  String?
 }
 
@@ -40,5 +40,5 @@ model User {
   email    String  @unique
   username String  @unique
   password String
-  orders   Order[]
+  orders   Order[] @relation(name: "user")
 }
