@@ -8,11 +8,27 @@ export async function getAccount(userId: string) {
   try {
     const account =
       (await prisma.account.findUnique({
+        select: {
+          balance: true,
+          blocked: true,
+          ceiling: true,
+          created_at: true,
+          max_overdraft: true,
+          refusal_count: true,
+        },
         where: {
           user_id: userId,
         },
       })) ??
       (await prisma.account.create({
+        select: {
+          balance: true,
+          blocked: true,
+          ceiling: true,
+          created_at: true,
+          max_overdraft: true,
+          refusal_count: true,
+        },
         data: {
           user: {
             connect: {

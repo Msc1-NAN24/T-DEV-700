@@ -77,7 +77,7 @@ router
 
       const parsedBody = await bodyValidator.parseAsync(req.body);
 
-      await transactionController.charge({
+      await transactionController.pay({
         amount: parsedBody.amount,
         recipientId: req.userId!,
         senderId: req.params.id,

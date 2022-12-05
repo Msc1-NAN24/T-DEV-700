@@ -94,9 +94,7 @@ export async function login(input: ILoginInput) {
       throw CustomError.unauthorized("Invalid username or password");
     }
 
-    const hashedPassword = bcrypt.hashSync(password, 10);
-
-    if (user.password !== hashedPassword) {
+    if (!bcrypt.compareSync(password, user.password)) {
       throw CustomError.unauthorized("Invalid username or password");
     }
 

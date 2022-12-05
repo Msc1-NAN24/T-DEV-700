@@ -1,15 +1,10 @@
 import { Request, Router } from "express";
-import { PrismaClient } from "@prisma/client";
 import { z, ZodError } from "zod";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 
 import { CustomResponse } from "../types/response";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { CustomError } from "../types/error";
 import authController from "../controllers/authentication";
-
-const prisma = new PrismaClient();
 
 const router = Router();
 
@@ -28,7 +23,6 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
           invalid_type_error: "Last name must be a string",
         })
         .min(1, "Last name must be at least 1 character long"),
-      // Custom error message for regex validation
       username: z
         .string({
           required_error: "Username is required",

@@ -106,6 +106,33 @@ export async function transaction(input: ITransactionInput) {
         sender.account.max_overdraft <
         input.amount - sender.account.balance
       ) {
+        await prisma.transaction.update({
+          where: {
+            id: transaction.id,
+          },
+          data: {
+            status: "REFUSED",
+          },
+        });
+
+        await prisma.user.update({
+          where: {
+            id: sender.id,
+          },
+          include: {
+            account: true,
+          },
+          data: {
+            account: {
+              update: {
+                refusal_count: {
+                  increment: 1,
+                },
+              },
+            },
+          },
+        });
+
         throw CustomError.forbidden("Amount exceeds max overdraft");
       }
       isOverdraft = true;
@@ -143,7 +170,7 @@ export async function transaction(input: ITransactionInput) {
     });
   } catch (err) {
     if (err instanceof PrismaClientKnownRequestError) {
-      throw CustomError.badRequest(err.message);
+      throw CustomError.badRequest();
     } else if (err instanceof CustomError) {
       throw err;
     } else {
@@ -153,19 +180,7 @@ export async function transaction(input: ITransactionInput) {
 }
 
 export async function pay(input: ITransactionInput) {
-  return await transaction({
-    amount: input.amount,
-    senderId: input.senderId,
-    recipientId: input.recipientId,
-  });
-}
-
-export async function charge(input: ITransactionInput) {
-  return await transaction({
-    amount: input.amount,
-    senderId: input.recipientId,
-    recipientId: input.senderId,
-  });
+  return await transaction(input);
 }
 
 export interface IGetTransactionsInput {
@@ -177,6 +192,16 @@ export interface IGetTransactionsInput {
 
 export async function getTransactions(input: IGetTransactionsInput) {
   try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: input.userId,
+      },
+    });
+
+    if (!user) {
+      throw CustomError.notFound("User not found");
+    }
+
     const transactions = await prisma.transaction.findMany({
       where: {
         OR: [
@@ -204,7 +229,7 @@ export async function getTransactions(input: IGetTransactionsInput) {
     return transactions;
   } catch (err) {
     if (err instanceof PrismaClientKnownRequestError) {
-      throw CustomError.badRequest(err.message);
+      throw CustomError.badRequest();
     } else if (err instanceof CustomError) {
       throw err;
     } else {
@@ -216,6 +241,5 @@ export async function getTransactions(input: IGetTransactionsInput) {
 export default {
   transaction,
   pay,
-  charge,
   getTransactions,
 };
