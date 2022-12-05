@@ -5,11 +5,12 @@ import { CustomResponse } from "../types/response";
 import { z, ZodError } from "zod";
 import crypto from "crypto";
 import { User } from "@prisma/client";
-import { UserModel } from "../../prisma/zod";
+import authorization from "../middleware/authorize";
 
 const router = Router();
 const userService = new UserService();
 
+router.all("/user", authorization);
 router.get("/", async (req: Request, res: CustomResponse) => {
   try {
     const users = await userService.getAll();
@@ -81,38 +82,57 @@ router.post("/", async (req: Request, res: CustomResponse) => {
   });
 
   try {
+    console.log("create User");
     const body = bodyValidator.parse(req.body);
-    const users = await userService.create({
+    const user = await userService.create({
       ...body,
       password: crypto.createHash("sha256").update(body.password).digest("hex"),
     });
 
-    return res.status(201).json({ success: true, data: users });
+    return res.status(201).json({
+      success: true,
+      data: { id: user.id, email: user.email, username: user.username },
+    });
   } catch (err) {
-    if (err instanceof PrismaClientKnownRequestError)
-      if (err instanceof ZodError) {
-        return res.status(400).json({
-          success: false,
-          message: err.issues[0].message ?? "Invalid request",
-        });
-      } else if (err instanceof PrismaClientKnownRequestError) {
-        console.error(err);
-        return res.status(500).json({
-          success: false,
-          message: "Internal server error",
-        });
-      } else {
-        console.error(err);
-        return res.status(500).json({
-          success: false,
-          message: "Internal server error",
-        });
-      }
+    console.error(err);
+    if (err instanceof ZodError) {
+      return res.status(400).json({
+        success: false,
+        message: err.issues[0].message ?? "Invalid request",
+      });
+    } else if (err instanceof PrismaClientKnownRequestError) {
+      return res.status(500).json({
+        success: false,
+        message: err.message || "Internal server error",
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+      });
+    }
   }
 });
 
 router.patch("/:id", async (req: Request, res: CustomResponse) => {
-  const bodyValidator = UserModel.partial();
+  const bodyValidator = z.object({
+    username: z
+      .string({
+        invalid_type_error: "Username must be a string",
+      })
+      .regex(
+        /^[a-zA-Z0-9_]{3,16}$/,
+        "Username must be between 3 and 16 characters and can only contain letters, numbers and underscores"
+      )
+      .optional(),
+    email: z
+      .string({
+        required_error: "Email is required",
+        invalid_type_error: "Email must be a string",
+      })
+      .email("Invalid email address")
+      .optional(),
+  });
   try {
     const { id } = req.params;
     const body = bodyValidator.parse(req.body);

@@ -1,12 +1,13 @@
 import { Router, Request } from "express";
-import { ProductModel } from "../../prisma/zod";
 import ProductService from "../services/productService";
 import { CustomResponse } from "../types/response";
 import { z } from "zod";
+import authorization from "../middleware/authorize";
 
 const router = Router();
 const productService = new ProductService();
 
+router.all("/order", authorization);
 router.get("/:id", async (req: Request, res: CustomResponse) => {
   try {
     const { id } = req.params;
@@ -73,7 +74,12 @@ router.post("/", async (req: Request, res: CustomResponse) => {
 });
 
 router.patch("/:id", async (req: Request, res: CustomResponse) => {
-  const bodyValidator = ProductModel.partial();
+  const bodyValidator = z.object({
+    name: z.string().optional(),
+    price: z.number().optional(),
+    description: z.string().optional(),
+    img: z.string().optional(),
+  });
 
   try {
     const { id } = req.params;
