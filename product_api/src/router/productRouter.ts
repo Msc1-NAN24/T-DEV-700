@@ -2,10 +2,12 @@ import { Router, Request } from "express";
 import ProductService from "../services/productService";
 import { CustomResponse } from "../types/response";
 import { z } from "zod";
+import authorization from "../middleware/authorize";
 
 const router = Router();
 const productService = new ProductService();
 
+router.all("/order", authorization);
 router.get("/:id", async (req: Request, res: CustomResponse) => {
   try {
     const { id } = req.params;

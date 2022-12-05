@@ -1,10 +1,12 @@
 import { Router, Request } from "express";
 import { CustomResponse } from "../types/response";
 import OrderService from "../services/orderService";
+import authorization from "../middleware/authorize";
 
 const router = Router();
 const orderService = new OrderService();
 
+router.all("", authorization);
 router.get("/", async (req: Request, res: CustomResponse) => {
   try {
     const order = await orderService.getAllOrder();

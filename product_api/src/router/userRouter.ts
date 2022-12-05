@@ -5,10 +5,12 @@ import { CustomResponse } from "../types/response";
 import { z, ZodError } from "zod";
 import crypto from "crypto";
 import { User } from "@prisma/client";
+import authorization from "../middleware/authorize";
 
 const router = Router();
 const userService = new UserService();
 
+router.all("/user", authorization);
 router.get("/", async (req: Request, res: CustomResponse) => {
   try {
     const users = await userService.getAll();
