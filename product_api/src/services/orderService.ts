@@ -55,4 +55,43 @@ export default class OrderService {
       console.log(error);
     }
   };
+
+  getAllOrder = async () => {
+    return await prisma.order.findMany({
+      select: {
+        id: true,
+        price: true,
+        product: {
+          select: { id: true, product: true, quantity: true, price: true },
+        },
+      },
+    });
+  };
+
+  getOrderByUserID = async (userId: string) => {
+    const order = await prisma.order.findMany({
+      where: { userId },
+      select: {
+        id: true,
+        price: true,
+        product: {
+          select: { id: true, product: true, quantity: true, price: true },
+        },
+      },
+    });
+    return order;
+  };
+
+  getOrderById = async (orderId: string) => {
+    return await prisma.order.findFirst({
+      where: { id: orderId },
+      select: {
+        id: true,
+        price: true,
+        product: {
+          select: { id: true, product: true, quantity: true, price: true },
+        },
+      },
+    });
+  };
 }

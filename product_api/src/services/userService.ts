@@ -9,13 +9,17 @@ export default class UserService {
     return user;
   };
 
-  getAll = async (): Promise<User[]> => {
-    const allUsers = await prisma.user.findMany();
+  getAll = async () => {
+    const allUsers = await prisma.user.findMany({
+      select: { email: true, id: true, orders: true, username: true },
+    });
     return allUsers;
   };
 
   getById = async (id: string) => {
-    const user = await prisma.user.findMany();
+    const user = await prisma.user.findMany({
+      select: { email: true, id: true, orders: true, username: true },
+    });
     return user;
   };
 
@@ -24,16 +28,18 @@ export default class UserService {
       where: {
         id,
       },
+      select: { email: true, id: true, orders: true, username: true },
       data: { ...userUpdate },
     });
     return user;
   };
 
-  deleteUser = async (id: string, userUpdate: Partial<User>) => {
+  deleteUser = async (id: string) => {
     const user = await prisma.user.delete({
       where: {
         id,
       },
+      select: { email: true, id: true, orders: true, username: true },
     });
     return user;
   };
