@@ -28,11 +28,11 @@ model Item {
 }
 
 model Order {
-  id      String  @id @default(uuid())
-  product Item[]  @relation(name: "order")
+  id      String @id @default(uuid())
+  product Item[] @relation(name: "order")
   price   Float
-  user    User?   @relation(fields: [userId], references: [id], name: "user")
-  userId  String?
+  user    User   @relation(fields: [userId], references: [id], name: "user")
+  userId  String
 }
 
 model User {

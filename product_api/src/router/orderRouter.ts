@@ -18,8 +18,12 @@ router.post("/", async (req: Request, res: CustomResponse) => {
       success: true,
       data: order,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
+    return res.status(200).json({
+      success: true,
+      message: err as string,
+    });
   }
 });
 

@@ -7,35 +7,33 @@ export default class ItemService {
     const product = await prisma.product.findFirst({
       where: { id: productId },
     });
+
     if (!product) throw new Error("Invalide product");
-    const item = await prisma.item.create({
-      data: {
-        quantity,
-        price: product.price,
-        product: product.name,
-      },
-    });
+    const item = {
+      quantity,
+      price: product.price,
+      product: product.name,
+    };
+
     return item;
   };
 
-  // generateMany = async (orderProductList: IOrderProduct[]) => {
-
-  //   const items = orderProductList.map(async ({ productId, quantity }) => {
-  //     const product = await prisma.product.findFirst({
-  //       where: { id: productId },
-  //     });
-  //     if (!product) throw new Error("Invalide product");
-  //     return {
-  //       quantity,
-  //       price: product.price,
-  //       product: product.name,
-  //     };
-  //   });
-  //   const item = await prisma.item.createMany({
-  //     data: items
-  //   });
-  //   return item;
-  // };
+  generateMany = async (orderProductList: IOrderProduct[]) => {
+    const items = Promise.all(
+      orderProductList.map(async ({ productId, quantity }) => {
+        const product = await prisma.product.findFirst({
+          where: { id: productId },
+        });
+        if (!product) throw new Error("Invalide product");
+        return {
+          quantity,
+          price: product.price,
+          product: product.name,
+        };
+      })
+    );
+    return items;
+  };
 
   getAll = async () => {
     return await prisma.item.findMany();

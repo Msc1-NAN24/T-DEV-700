@@ -80,33 +80,35 @@ router.post("/", async (req: Request, res: CustomResponse) => {
   });
 
   try {
+    console.log("create User");
     const body = bodyValidator.parse(req.body);
-    const users = await userService.create({
+    const user = await userService.create({
       ...body,
       password: crypto.createHash("sha256").update(body.password).digest("hex"),
     });
 
-    return res.status(201).json({ success: true, data: users });
+    return res.status(201).json({
+      success: true,
+      data: { id: user.id, email: user.email, username: user.username },
+    });
   } catch (err) {
-    if (err instanceof PrismaClientKnownRequestError)
-      if (err instanceof ZodError) {
-        return res.status(400).json({
-          success: false,
-          message: err.issues[0].message ?? "Invalid request",
-        });
-      } else if (err instanceof PrismaClientKnownRequestError) {
-        console.error(err);
-        return res.status(500).json({
-          success: false,
-          message: "Internal server error",
-        });
-      } else {
-        console.error(err);
-        return res.status(500).json({
-          success: false,
-          message: "Internal server error",
-        });
-      }
+    console.error(err);
+    if (err instanceof ZodError) {
+      return res.status(400).json({
+        success: false,
+        message: err.issues[0].message ?? "Invalid request",
+      });
+    } else if (err instanceof PrismaClientKnownRequestError) {
+      return res.status(500).json({
+        success: false,
+        message: err.message || "Internal server error",
+      });
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+      });
+    }
   }
 });
 
