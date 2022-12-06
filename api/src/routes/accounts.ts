@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { xor } from "lodash";
 import { z, ZodError } from "zod";
 
 import accountControlleur from "../controllers/accounts";

@@ -1,8 +1,8 @@
-import { PrismaClient, TransactionStatus } from "@prisma/client";
+import { TransactionStatus } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-import { CustomError } from "../types/error";
 
-const prisma = new PrismaClient();
+import prisma from "../client";
+import { CustomError } from "../types/error";
 
 export interface ITransactionInput {
   amount: number;

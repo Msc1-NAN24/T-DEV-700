@@ -1,6 +1,9 @@
 export class CustomError extends Error {
-  constructor(message: string, public statusCode: number) {
+  constructor(message: string = "", public statusCode: number) {
     super(message);
+
+    // Set the `name` property of the `Error` instance to the name of the `CustomError` class
+    this.name = this.constructor.name;
   }
 
   static badRequest(message: string = "Bad request") {
@@ -25,5 +28,13 @@ export class CustomError extends Error {
 
   static conflict(message: string = "Conflict") {
     return new CustomError(message, 409);
+  }
+
+  static databaseError(message: string = "Database error") {
+    return new CustomError(message, 500);
+  }
+
+  static credentialsError(message: string = "Invalid username or password") {
+    return new CustomError(message, 401);
   }
 }

@@ -1,10 +1,9 @@
-import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { CustomError } from "../types/error";
 
-const prisma = new PrismaClient();
+import prisma from "../client";
+import { CustomError } from "../types/error";
 
 export interface IRegisterInput {
   first_name: string;
@@ -43,10 +42,6 @@ export async function register(input: IRegisterInput) {
       },
     });
 
-    if (!user) {
-      throw CustomError.unauthorized("Invalid credentials");
-    }
-
     const token = jwt.sign(
       {
         userId: user.id,
@@ -60,16 +55,17 @@ export async function register(input: IRegisterInput) {
     );
 
     return { token };
-  } catch (err) {
-    if (err instanceof PrismaClientKnownRequestError) {
-      switch (err.code) {
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError) {
+      switch (error.code) {
         case "P2002":
           throw CustomError.conflict("Username or email already exists");
         default:
           throw CustomError.internalServerError();
       }
+    } else if (error instanceof CustomError) {
+      throw error;
     } else {
-      console.error(err);
       throw CustomError.internalServerError();
     }
   }
@@ -91,11 +87,11 @@ export async function login(input: ILoginInput) {
     });
 
     if (!user) {
-      throw CustomError.unauthorized("Invalid username or password");
+      throw CustomError.credentialsError();
     }
 
     if (!bcrypt.compareSync(password, user.password)) {
-      throw CustomError.unauthorized("Invalid username or password");
+      throw CustomError.credentialsError();
     }
 
     const token = jwt.sign(
@@ -111,18 +107,17 @@ export async function login(input: ILoginInput) {
     );
 
     return { token };
-  } catch (err) {
-    if (err instanceof PrismaClientKnownRequestError) {
-      switch (err.code) {
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError) {
+      switch (error.code) {
         case "P2025":
           throw CustomError.badRequest("User not found");
         default:
           throw CustomError.internalServerError();
       }
-    } else if (err instanceof CustomError) {
-      throw err;
+    } else if (error instanceof CustomError) {
+      throw error;
     } else {
-      console.error(err);
       throw CustomError.internalServerError();
     }
   }

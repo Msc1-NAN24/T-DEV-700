@@ -1,14 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import dotenvExpand from "dotenv-expand";
-import { PrismaClient } from "@prisma/client";
 import productRouter from "./router/productRouter";
 import userRouter from "./router/userRouter";
 
 const appEnv = dotenv.config();
 dotenvExpand.expand(appEnv);
-
-export const prisma = new PrismaClient();
 
 const app = express();
 

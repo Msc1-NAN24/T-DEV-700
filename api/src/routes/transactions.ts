@@ -1,14 +1,13 @@
+import { TransactionStatus } from "@prisma/client";
 import { Router } from "express";
-import { PrismaClient, TransactionStatus } from "@prisma/client";
-
-import { CustomRequest } from "../types/request";
-import { CustomResponse } from "../types/response";
-import authorization from "../middleware/authorization";
-import { CustomError } from "../types/error";
-import transactionController from "../controllers/transactions";
 import { z, ZodError } from "zod";
 
-const prisma = new PrismaClient();
+import transactionController from "../controllers/transactions";
+import authorization from "../middleware/authorization";
+import { CustomError } from "../types/error";
+import { CustomRequest } from "../types/request";
+import { CustomResponse } from "../types/response";
+
 const router = Router();
 
 router

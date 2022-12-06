@@ -1,10 +1,10 @@
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { Request, Router } from "express";
 import { z, ZodError } from "zod";
 
-import { CustomResponse } from "../types/response";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-import { CustomError } from "../types/error";
 import authController from "../controllers/authentication";
+import { CustomError } from "../types/error";
+import { CustomResponse } from "../types/response";
 
 const router = Router();
 
