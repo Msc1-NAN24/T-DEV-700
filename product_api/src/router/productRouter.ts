@@ -7,7 +7,7 @@ import authorization from "../middleware/authorize";
 const router = Router();
 const productService = new ProductService();
 
-router.all("/order", authorization);
+router.all("/product", authorization);
 router.get("/:id", async (req: Request, res: CustomResponse) => {
   try {
     const { id } = req.params;
