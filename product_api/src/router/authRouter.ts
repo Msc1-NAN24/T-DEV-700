@@ -1,17 +1,18 @@
 import { Router, Request } from "express";
-import { CustomResponse } from "../types/response";
-import AuthService from "../services/authService";
-import UserService from "../services/userService";
 import crypto from "crypto";
-import { prisma } from "..";
 import z from "zod";
+import { CustomResponse } from "../types/response";
+import { prisma } from "..";
+import AuthService from "../services/authService";
+import { create } from "../services/userService";
 
 const router = Router();
 const authService = new AuthService();
-const userService = new UserService();
 
 router.post("/login", async (req: Request, res: CustomResponse) => {
   try {
+    console.log("test");
+
     const body: { email: string; password: string } = req.body;
     const user = await prisma.user.findUnique({
       where: {
@@ -75,7 +76,7 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
   try {
     console.log("create User");
     const body = bodyValidator.parse(req.body);
-    const user = await userService.create(body);
+    const user = await create(body);
 
     return res.status(201).json({
       success: true,

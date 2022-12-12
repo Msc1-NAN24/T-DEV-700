@@ -1,5 +1,5 @@
 import { Product } from "@prisma/client";
-import { prisma } from "..";
+import prisma from "../client";
 
 export default class ProductService {
   create = async (newProduct: any) => {

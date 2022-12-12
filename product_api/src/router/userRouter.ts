@@ -1,19 +1,18 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { Router, Request } from "express";
-import UserService from "../services/userService";
 import { CustomResponse } from "../types/response";
 import { z, ZodError } from "zod";
 import crypto from "crypto";
 import { User } from "@prisma/client";
 import authorization from "../middleware/authorize";
+import { create, getAll, getById, update } from "../services/userService";
 
 const router = Router();
-const userService = new UserService();
 
 router.all("/user", authorization);
 router.get("/", async (req: Request, res: CustomResponse) => {
   try {
-    const users = await userService.getAll();
+    const users = await getAll();
     return res.status(200).json({ success: true, data: users });
   } catch (err) {
     console.error(err);
@@ -27,7 +26,7 @@ router.get("/", async (req: Request, res: CustomResponse) => {
 router.get("/:id", async (req: Request, res: CustomResponse) => {
   try {
     const { id } = req.params;
-    const users = await userService.getById(id);
+    const users = await getById(id);
     return res.status(200).json({ success: true, data: users });
   } catch (err) {
     if (err instanceof PrismaClientKnownRequestError)
@@ -84,7 +83,7 @@ router.post("/", async (req: Request, res: CustomResponse) => {
   try {
     console.log("create User");
     const body = bodyValidator.parse(req.body);
-    const user = await userService.create({
+    const user = await create({
       ...body,
       password: crypto.createHash("sha256").update(body.password).digest("hex"),
     });
@@ -136,7 +135,7 @@ router.patch("/:id", async (req: Request, res: CustomResponse) => {
   try {
     const { id } = req.params;
     const body = bodyValidator.parse(req.body);
-    const users = await userService.update(id, body as Partial<User>);
+    const users = await update(id, body as Partial<User>);
     return res.status(200).json({ success: true, data: users });
   } catch (err) {
     if (err instanceof PrismaClientKnownRequestError)

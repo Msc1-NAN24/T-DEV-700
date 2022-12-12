@@ -1,7 +1,5 @@
-import { Item } from "@prisma/client";
-import { prisma } from "..";
+import prisma from "../client";
 import ItemService from "./itemService";
-import UserService from "./userService";
 
 export interface IOrderProduct {
   productId: string;
@@ -10,7 +8,6 @@ export interface IOrderProduct {
 
 export default class OrderService {
   itemService = new ItemService();
-  userService = new UserService();
   create = async (orderInfo: {
     userID: string;
     orderProduct: IOrderProduct[];
@@ -22,8 +19,6 @@ export default class OrderService {
       const totalPrice = items
         .map((item) => item!.price * item!.quantity)
         .reduce((acc, value) => acc + value);
-
-      const user = await this.userService.getById(userID);
 
       await prisma.user.update({ where: { id: userID }, data: {} });
 

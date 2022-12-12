@@ -1,5 +1,5 @@
 import { Item, Order } from "@prisma/client";
-import { prisma } from "..";
+import prisma from "../client";
 import { IOrderProduct } from "./orderService";
 
 export default class ItemService {
