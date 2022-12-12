@@ -8,6 +8,7 @@
 #include "BankApi.h"
 #include "OledScreen.h"
 #include "NfcModule.h"
+#include "QrCode.h"
 
 class Program {
 public:
@@ -23,9 +24,13 @@ public:
 
 private:
     BankApi* bank;
+
     OledScreen* screen;
 
     NfcModule* NFC;
+
+    QrCode* qrCode;
+
 };
 
 #endif
