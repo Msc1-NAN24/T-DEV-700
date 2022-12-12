@@ -16,7 +16,17 @@ public:
     int getAmount();
 
 private:
+    /**
+     * @brief resultat brut de la lecture du qrcode
+     *
+     */
     String result;
+
+    /**
+     * @brief dernière demande de lecture
+     *
+     */
+    long mili;
 
 };
 

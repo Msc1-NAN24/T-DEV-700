@@ -6,25 +6,14 @@
 QrCode::QrCode() {
     Serial2.begin(115200);
     this->result = "";
+    mili = 0;
 }
-
-String QrCode::read() {
-    String sortie = "";
-    do {
-        if (Serial2.available() > 0) {
-            while (Serial2.available() > 0) {
-                sortie += (char)Serial2.read();
-            }
-            this->result += sortie;
-            return sortie;
-        }
-    } while (sortie != "");
-}//TODO: retourner un bool et faire le traitement de la requet dans une autre fonction
 
 void QrCode::readRequest() {
     String sortie = "";
     do {
         Serial2.println("~T.");
+        this->mili = millis();
         delay(700);//TODO: rm delay
         if (Serial2.available() > 0) {
             while (Serial2.available() > 0) {
@@ -33,6 +22,20 @@ void QrCode::readRequest() {
         }
     } while (sortie.indexOf("T␆") != -1);
 }
+
+String QrCode::read() {
+    String sortie = "";
+    if ((this->mili + 11000) < millis()) {
+        this->readRequest();
+    }
+    if (Serial2.available() > 0) {
+        while (Serial2.available() > 0) {
+            sortie += (char)Serial2.read();
+        }
+        this->result += sortie;
+    }
+    return sortie;
+}//TODO: retourner un bool et faire le traitement de la requet dans une autre fonction
 
 int QrCode::getAmount() {
     int amount = 0;
