@@ -1,10 +1,17 @@
 import { User } from "@prisma/client";
 import { prisma } from "..";
+import crypto from "crypto";
 
 export default class UserService {
   create = async (newUser: any) => {
     const user = await prisma.user.create({
-      data: { ...newUser },
+      data: {
+        ...newUser,
+        password: crypto
+          .createHash("sha256")
+          .update(newUser.password)
+          .digest("hex"),
+      },
     });
     return user;
   };
@@ -17,7 +24,8 @@ export default class UserService {
   };
 
   getById = async (id: string) => {
-    const user = await prisma.user.findMany({
+    const user = await prisma.user.findUnique({
+      where: { id },
       select: { email: true, id: true, orders: true, username: true },
     });
     return user;
