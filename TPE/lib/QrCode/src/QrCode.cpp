@@ -9,22 +9,30 @@ QrCode::QrCode() {
 }
 
 String QrCode::read() {
-    if (Serial2.available() > 0) {
-        String result = "";
-        while (Serial2.available() > 0) {
-            result += (char)Serial2.read();
+    String sortie = "";
+    do {
+        if (Serial2.available() > 0) {
+            while (Serial2.available() > 0) {
+                sortie += (char)Serial2.read();
+            }
+            this->result += sortie;
+            return sortie;
         }
-        this->result += result;
-        return this->result;
-    }
-    return "";
+    } while (sortie != "");
 }//TODO: retourner un bool et faire le traitement de la requet dans une autre fonction
 
 void QrCode::readRequest() {
-    Serial2.println("~T.");
-    this->result = "";
+    String sortie = "";
+    do {
+        Serial2.println("~T.");
+        delay(700);//TODO: rm delay
+        if (Serial2.available() > 0) {
+            while (Serial2.available() > 0) {
+                sortie += (char)Serial2.read();
+            }
+        }
+    } while (sortie.indexOf("T␆") != -1);
 }
-
 
 int QrCode::getAmount() {
     int amount = 0;
