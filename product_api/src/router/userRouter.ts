@@ -10,9 +10,11 @@ import authorization from "../middleware/authorize";
 const router = Router();
 const userService = new UserService();
 
-router.all("/user", authorization);
+router.use(authorization);
 router.get("/", async (req: Request, res: CustomResponse) => {
   try {
+    console.log("test");
+
     const users = await userService.getAll();
     return res.status(200).json({ success: true, data: users });
   } catch (err) {

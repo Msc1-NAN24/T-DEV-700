@@ -15,9 +15,9 @@ export const prisma = new PrismaClient();
 const app = express();
 
 app.use(express.json());
-app.use(userRouter);
-app.use(productRouter);
-app.use(orderRouter);
+app.use("/user", userRouter);
+app.use("/product", productRouter);
+app.use("/order", orderRouter);
 app.use("/auth", authRouter);
 app.listen(process.env.APP_PORT, () => {
   console.log("Example app listening on port 3000!");
