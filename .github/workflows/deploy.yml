@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: debian
+    runs-on: ubuntu-latest
     steps:
       - name: git pull
         uses: appleboy/ssh-action@v0.1.2
