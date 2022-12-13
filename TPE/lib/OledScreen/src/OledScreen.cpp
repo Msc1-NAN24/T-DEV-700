@@ -4,6 +4,7 @@
 
 #include "../include/Ok.h"
 #include "../include/Process.h"
+#include "../include/Error.h"
 
 OledScreen::OledScreen(int screenWidth, int screenHeight, int oledResetPin) {
     this->display = new Adafruit_SSD1306(screenWidth, screenHeight, &Wire, oledResetPin);
@@ -13,6 +14,17 @@ OledScreen::OledScreen(int screenWidth, int screenHeight, int oledResetPin) {
     }
     this->display->clearDisplay();
 }
+
+
+void OledScreen::welcome() {
+    this->display->clearDisplay();
+    this->display->setCursor(0, 0);
+    this->display->setTextSize(2);
+    this->display->setTextColor(WHITE);
+    this->display->println(F("\nBienvenue!"));
+    this->display->display();
+}
+
 
 void OledScreen::printAmount(int amount) {
     this->display->clearDisplay();
@@ -39,7 +51,7 @@ void OledScreen::process() {
         this->display->setCursor(0, 0);
         this->display->setTextSize(2);
         this->display->setTextColor(WHITE);
-        this->display->println(F("Patienter"));
+        this->display->println(F(" Patienter"));
         this->display->drawBitmap(16, 16, process_allArray[i], 96, 48, WHITE);
         this->display->display();
         delay(20);  // FIXME: use a timer
@@ -62,6 +74,26 @@ void OledScreen::validateAnimation() {
     this->display->println();
     this->display->display();
 }
+
+void OledScreen::errorAnimation(String message) {
+    for (int i = 0; i < error_allArray_LEN; i++) {
+        this->display->clearDisplay();
+        this->display->drawBitmap(32, 7, error_allArray[i], 64, 51, WHITE);
+        this->display->display();
+        delay(20);  // FIXME: use a timer
+    }
+    delay(200);
+    this->display->clearDisplay();
+    this->display->setCursor(0, 0);
+    this->display->setTextSize(2);
+    this->display->setTextColor(WHITE);
+    this->display->println(F("  Error:  \n"));
+    this->display->println(message);
+    this->display->println();
+    this->display->display();
+    delay(5000);
+}
+
 
 void OledScreen::clear() {
     this->display->clearDisplay();
