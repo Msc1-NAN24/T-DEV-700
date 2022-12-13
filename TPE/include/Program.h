@@ -31,6 +31,12 @@ private:
 
     QrCode* qrCode;
 
+    /**
+     * @brief tram envoyer en serie par l'app
+     *
+     */
+    String tram;
+
 };
 
 #endif

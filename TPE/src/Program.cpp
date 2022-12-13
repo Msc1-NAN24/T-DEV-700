@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <BankApi.h>
+#include <WiFiManager.h>
 
 
 Program::Program() {
@@ -17,30 +18,29 @@ Program::Program() {
     // init QRcode
     this->qrCode = new QrCode();
 
+    this->tram = "";
+
     // Startup
     Serial.begin(MONITOR_SPEED);
 
-    // this->screen->process();
-    // this->screen->printAmount(4269);
-    // delay(1000);
-    // this->screen->validateAnimation();
+    //init WiFi
+    WiFi.mode(WIFI_STA);
+    WiFiManager wm;
+    //wm.setDebugOutput(false); //FIXME : rm commentaire pour prod
+    wm.autoConnect(WIFI_DEFAULT_SSID, WIFI_DEFAULT_PASSWORD);
+
 
 }
 
-String result = "";
-
-bool temp = false;
-
 void Program::loop() {
-    //TODO: mettre un message de bienvenue sur l'écran
 
+    //TODO: faire un ecran d'érreur blocquant si le WIFI est pas connecter
+/*
     String tag = this->NFC->read();
     if (tag != "") {
         Serial.println(tag);
         delay(1000);
     }
-
-
     if (result == "") {
         result = qrCode->read();
     } else if (!temp) {
@@ -49,13 +49,67 @@ void Program::loop() {
         Serial.println(qrCode->getAmount());
         Serial.println(qrCode->getUuid());
     }
+*/
 
+    // debut code principal
+
+    if (Serial.available() > 0) {
+        String sortie = "";
+        while (Serial.available() > 0) {
+            sortie += (char)Serial.read();
+        }
+        this->tram = sortie;
+    } else if (this->tram != "") {
+        int amount = this->tram.toInt();
+        Serial.println(this->tram);
+        this->screen->printAmount(amount);
+
+        String qrcodeTram = "";
+        String nfcTram = "";
+        do {
+            qrcodeTram = this->qrCode->read();
+            nfcTram = this->NFC->read();
+        } while (qrcodeTram == "" && nfcTram == "");
+
+        Serial.print("qrcodeTram :");
+        Serial.println(qrcodeTram);
+
+        Serial.print("nfcTram :");
+        Serial.println(nfcTram);
+
+        this->screen->process();
+        if (qrcodeTram != "") {
+            if (this->qrCode->getAmount() != amount) {
+                Serial.print("QRcode Error : ");
+                Serial.print(this->qrCode->getAmount());
+                Serial.println(amount);
+                this->tram = "";
+                this->screen->errorAnimation("Valeur QR");
+                return;
+            } else {
+                bool transaction = this->bank->receiveFrom(this->qrCode->getUuid(), this->qrCode->getAmount());
+                this->screen->process();
+                if (!transaction) {
+                    this->screen->errorAnimation(" Transac: \n   Bank   ");
+                    //TODO: mettre ecran d'erreur requete incorrect
+                } else {
+                    this->screen->validateAnimation();
+                }
+            }
+        } else {
+            //TODO: faire process nfc
+            this->tram = "";
+        }
+    } else {
+        this->screen->welcome();
+    }
 
     /*
     algo :
     j'attend un message serie
     je le transforme en int
     je l'affiche a l'écran le montant de la transaction
+
     je lis le lecteur qrcode et le lecteur nfc
     j'affiche l'ecran de chargement
     si qrcode je compart le montant avec le montant envoyer
@@ -68,3 +122,6 @@ void Program::loop() {
     si elle est invalide j'affiche un message d'érreur et send erreur a l'app
     */
 }
+
+
+//TODO: faire custom field on config (voir :https://www.youtube.com/watch?v=VnfX9YJbaU8)

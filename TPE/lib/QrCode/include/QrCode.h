@@ -9,8 +9,6 @@ public:
 
     String read();
 
-    void readRequest();
-
     String getUuid();
 
     int getAmount();
@@ -27,6 +25,12 @@ private:
      *
      */
     long mili;
+
+    /**
+     * @brief envoie une tram de lecture au lecteur
+     *
+     */
+    void readRequest();
 
 };
 
