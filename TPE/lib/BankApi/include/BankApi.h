@@ -27,9 +27,9 @@ public:
      */
     bool receiveFrom(String userID, int amount);
 
-    bool login();//TODO: passer en privé a l'automatisation
 private:
 
+    bool login();
 
     String username;
 

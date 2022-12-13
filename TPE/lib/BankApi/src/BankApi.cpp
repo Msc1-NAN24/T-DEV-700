@@ -14,7 +14,7 @@ BankApi::BankApi(String ip, int port, String user, String password) {
     this->token = "";
 }
 
-bool BankApi::receiveFrom(String userID, int amount) {
+bool BankApi::receiveFrom(String userID, int amount) {//TODO: mettre l'animation de process dans la fonction d'api
     bool sortie = true;
     this->http->begin(*this->client, this->ip, this->port, URL_USER + userID + URL_PAYMENT);
     this->http->addHeader("Authorization", "Bearer " + this->token);
@@ -26,9 +26,9 @@ bool BankApi::receiveFrom(String userID, int amount) {
         Serial.println(this->http->errorToString(resp));
         Serial.println(this->http->getString());
         sortie = false;
-    } //else if (resp == 401){  // 401 = Unauthorized
-
-    //}
+    } else if (resp == 401) {  // 401 = Unauthorized
+        this->login();
+    }
     //TODO: fair un else if code si test pas connecter lancer login et si login ok relancer receiveFrom et return son resultat
     this->http->end();
     return sortie;
