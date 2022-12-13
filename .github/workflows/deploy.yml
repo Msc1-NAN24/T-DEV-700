@@ -28,4 +28,4 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           script: |
             cd /home/debian/T-DEV-700
-            docker-compose -f docker-compose.yml up --build -d
+            docker-compose -f docker-compose-prod.yml up --build -d
