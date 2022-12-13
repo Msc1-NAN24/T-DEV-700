@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: debian-latest
     steps:
       - name: git pull
         uses: appleboy/ssh-action@v0.1.2
@@ -16,8 +16,8 @@ jobs:
           password: ${{secrets.SSH_PASSWORD}}
           username: ${{secrets.SSH_USERNAME}}
           script: |
-            cd TimeManagerMirror
-            git checkout main
+            cd /home/debian/T-DEV-700
+            git checkout develop
             git pull
 
       - name: docker Build
@@ -27,5 +27,5 @@ jobs:
           password: ${{secrets.SSH_PASSWORD}}
           username: ${{secrets.SSH_USERNAME}}
           script: |
-            cd TimeManagerMirror
-            docker-compose -f docker-compose.prod.yml up --build -d
+            cd /home/debian/T-DEV-700
+            docker-compose -f docker-compose.yml up --build -d
