@@ -20,15 +20,15 @@ bool BankApi::receiveFrom(String userID, int amount) {//TODO: mettre l'animation
     this->http->addHeader("Authorization", "Bearer " + this->token);
     this->http->addHeader("Content-Type", "application/json");
     int resp = this->http->POST("{\"amount\": " + String(amount) + "}");
-    if (resp != 201) {
+    if (resp == 401) {  // 401 = Unauthorized
+        this->login();
+        this->receiveFrom(userID, amount);
+    } else if (resp != 201) {
         Serial.println("Error while sending money");
         Serial.println(resp);
         Serial.println(this->http->errorToString(resp));
         Serial.println(this->http->getString());
         sortie = false;
-    } else if (resp == 401) {  // 401 = Unauthorized
-        this->login();
-        this->receiveFrom(userID, amount);
     }
     this->http->end();
     return sortie;
