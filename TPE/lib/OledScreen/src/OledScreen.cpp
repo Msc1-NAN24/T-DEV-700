@@ -96,7 +96,7 @@ void OledScreen::errorAnimation(String message) {
 }
 
 
-void OledScreen::wifiWaiting(){
+void OledScreen::wifiWaiting() {
     this->clear();
     this->display->setCursor(0, 0);
     this->display->setTextSize(2);

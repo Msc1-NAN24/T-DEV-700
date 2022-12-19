@@ -91,13 +91,21 @@ void Program::loop() {
                 if (!transaction) {
                     this->screen->errorAnimation(" Transac: \n   Bank   ");
                     //TODO: mettre ecran d'erreur requete incorrect
-                    this->tram = "";
                 } else {
                     this->screen->validateAnimation();
                 }
+                this->tram = "";
             }
         } else {
             //TODO: faire process nfc
+            bool transaction = this->bank->receiveFrom(nfcTram, amount);
+            this->screen->process();
+            if (!transaction) {
+                this->screen->errorAnimation(" Transac: \n   Bank   ");
+                //TODO: mettre ecran d'erreur requete incorrect
+            } else {
+                this->screen->validateAnimation();
+            }
             this->tram = "";
         }
     } else {

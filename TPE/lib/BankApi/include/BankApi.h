@@ -27,6 +27,9 @@ public:
      */
     bool receiveFrom(String userID, int amount);
 
+
+    bool receiveFromNFC(String NFCID, int amount);
+
 private:
 
     bool login();
