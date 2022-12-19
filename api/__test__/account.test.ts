@@ -23,7 +23,7 @@ const mockUser = {
 
 const mockAccount = {
   id: faker.datatype.uuid(),
-  credit_card: faker.datatype.number(),
+  credit_card: faker.datatype.string(),
   cheque_uuid: faker.datatype.uuid(),
   user_id: mockUser.id,
   balance: faker.datatype.number(),
@@ -68,11 +68,8 @@ describe("Account controller", () => {
       prismaMock.account.update.mockResolvedValueOnce(mockAccount);
 
       const input: IAccountInput = {
-        balance: faker.datatype.number(),
-        blocked: faker.datatype.boolean(),
         ceiling: faker.datatype.number(),
         max_overdraft: faker.datatype.number(),
-        refusalCount: faker.datatype.number(),
       };
 
       const account = await updateAccount(mockUser.id, input);
@@ -89,11 +86,8 @@ describe("Account controller", () => {
       );
 
       const input: IAccountInput = {
-        balance: faker.datatype.number(),
-        blocked: faker.datatype.boolean(),
         ceiling: faker.datatype.number(),
         max_overdraft: faker.datatype.number(),
-        refusalCount: faker.datatype.number(),
       };
 
       await expect(updateAccount(mockUser.id, input)).rejects.toThrow(
@@ -108,11 +102,8 @@ describe("Account controller", () => {
       prismaMock.account.update.mockRejectedValueOnce(new Error());
 
       const input: IAccountInput = {
-        balance: faker.datatype.number(),
-        blocked: faker.datatype.boolean(),
         ceiling: faker.datatype.number(),
         max_overdraft: faker.datatype.number(),
-        refusalCount: faker.datatype.number(),
       };
 
       await expect(updateAccount(mockUser.id, input)).rejects.toThrow(
