@@ -23,18 +23,16 @@ Program::Program() {
     // Startup
     Serial.begin(MONITOR_SPEED);
 
+    this->screen->wifiWaiting();
+
     //init WiFi
     WiFi.mode(WIFI_STA);
     WiFiManager wm;
     //wm.setDebugOutput(false); //FIXME : rm commentaire pour prod
     wm.autoConnect(WIFI_DEFAULT_SSID, WIFI_DEFAULT_PASSWORD);
-
-
 }
 
 void Program::loop() {
-
-    //TODO: faire un ecran d'érreur blocquant si le WIFI est pas connecter
 /*
     String tag = this->NFC->read();
     if (tag != "") {
@@ -82,6 +80,7 @@ void Program::loop() {
             if (this->qrCode->getAmount() != amount) {
                 Serial.print("QRcode Error : ");
                 Serial.print(this->qrCode->getAmount());
+                Serial.print(" : ");
                 Serial.println(amount);
                 this->tram = "";
                 this->screen->errorAnimation("Valeur QR");
@@ -92,6 +91,7 @@ void Program::loop() {
                 if (!transaction) {
                     this->screen->errorAnimation(" Transac: \n   Bank   ");
                     //TODO: mettre ecran d'erreur requete incorrect
+                    this->tram = "";
                 } else {
                     this->screen->validateAnimation();
                 }
