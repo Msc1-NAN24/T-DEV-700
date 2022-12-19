@@ -51,6 +51,14 @@ public:
      */
     void clear();
 
+
+    /**
+     * @brief messsage for wifi waiting
+     *
+     */
+    void wifiWaiting();
+
+
 private:
 
     Adafruit_SSD1306* display;

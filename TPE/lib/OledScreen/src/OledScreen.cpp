@@ -73,6 +73,7 @@ void OledScreen::validateAnimation() {
     this->display->println(F("\n Paiement \n    OK"));
     this->display->println();
     this->display->display();
+    delay(5000);
 }
 
 void OledScreen::errorAnimation(String message) {
@@ -92,6 +93,18 @@ void OledScreen::errorAnimation(String message) {
     this->display->println();
     this->display->display();
     delay(5000);
+}
+
+
+void OledScreen::wifiWaiting(){
+    this->clear();
+    this->display->setCursor(0, 0);
+    this->display->setTextSize(2);
+    this->display->setTextColor(WHITE);
+    this->display->println(F("Connection\n"));
+    this->display->println(F("  WiFi...\n"));
+    this->display->println();
+    this->display->display();
 }
 
 
