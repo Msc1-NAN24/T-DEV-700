@@ -179,6 +179,29 @@ router
 router
   .route("/users/:id")
   .all(authorization)
-  .get(async (req: CustomRequest, res: CustomResponse) => {});
+  .get(async (req: CustomRequest, res: CustomResponse) => {
+    try {
+      const user = await userController.get(req.params.id);
+
+      res.status(200).json({
+        success: true,
+        data: {
+          user,
+        },
+      });
+    } catch (error) {
+      if (error instanceof CustomError) {
+        res.status(error.statusCode).json({
+          success: false,
+          error: error.message,
+        });
+      } else {
+        res.status(500).json({
+          success: false,
+          error: "Internal server error",
+        });
+      }
+    }
+  });
 
 export default router;

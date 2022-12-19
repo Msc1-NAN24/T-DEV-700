@@ -238,8 +238,158 @@ export async function getTransactions(input: IGetTransactionsInput) {
   }
 }
 
+export async function creditCardTransaction(
+  input: ICreditCardTransactionInput
+) {
+  try {
+    const creditCard = await prisma.account.findUnique({
+      where: {
+        credit_card: input.creditCardId,
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    if (!creditCard) {
+      throw CustomError.notFound("Credit card not found");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: input.recipientId,
+      },
+      include: {
+        account: true,
+      },
+    });
+
+    if (!user) {
+      throw CustomError.notFound("User not found");
+    }
+
+    const transaction = await prisma.transaction.create({
+      data: {
+        amount: input.amount,
+        receiver: {
+          connectOrCreate: {
+            where: {
+              user_id: user.id,
+            },
+            create: {
+              user: {
+                connect: {
+                  id: user.id,
+                },
+              },
+            },
+          },
+        },
+        sender: {
+          connectOrCreate: {
+            where: {
+              user_id: creditCard.user_id,
+            },
+            create: {
+              user: {
+                connect: {
+                  id: creditCard.user_id,
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    var isOverdraft = false;
+
+    if (user.account && user.account.balance < input.amount) {
+      if (user.account.max_overdraft < input.amount - user.account.balance) {
+        await prisma.transaction.update({
+          where: {
+            id: transaction.id,
+          },
+          data: {
+            status: "REFUSED",
+          },
+        });
+
+        await prisma.user.update({
+          where: {
+            id: user.id,
+          },
+          include: {
+            account: true,
+          },
+          data: {
+            account: {
+              update: {
+                refusal_count: {
+                  increment: 1,
+                },
+              },
+            },
+          },
+        });
+
+        throw CustomError.forbidden("Amount exceeds max overdraft");
+      }
+      isOverdraft = true;
+    }
+
+    await prisma.account.update({
+      where: {
+        user_id: creditCard.user_id,
+      },
+      data: {
+        balance: {
+          decrement: input.amount,
+        },
+      },
+    });
+
+    await prisma.account.update({
+      where: {
+        user_id: user.id,
+      },
+      data: {
+        balance: {
+          increment: input.amount,
+        },
+      },
+    });
+
+    await prisma.transaction.update({
+      where: {
+        id: transaction.id,
+      },
+      data: {
+        status: isOverdraft ? "OVERDRAFT" : "ACCEPTED",
+      },
+    });
+
+    return transaction;
+  } catch (err) {
+    if (err instanceof PrismaClientKnownRequestError) {
+      throw CustomError.badRequest();
+    } else if (err instanceof CustomError) {
+      throw err;
+    } else {
+      throw CustomError.internalServerError();
+    }
+  }
+}
+
+export interface ICreditCardTransactionInput {
+  amount: number;
+  creditCardId: string;
+  recipientId: string;
+}
+
 export default {
   transaction,
   pay,
   getTransactions,
+  creditCardTransaction,
 };

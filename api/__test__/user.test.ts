@@ -4,7 +4,13 @@ import bcrypt from "bcrypt";
 import { faker } from "@faker-js/faker";
 
 import { CustomError } from "../src/types/error";
-import * as user from "../src/controllers/user";
+import {
+  get,
+  IUpdateUser,
+  remove,
+  update,
+  updatePassword,
+} from "../src/controllers/user";
 import { prismaMock } from "../src/singleton";
 
 describe("UserController", () => {
@@ -33,7 +39,7 @@ describe("UserController", () => {
 
       prismaMock.user.findUnique.mockResolvedValue(mockUser);
 
-      const result = await user.get(userId);
+      const result = await get(userId);
 
       expect(result).toBeDefined();
       expect(result).toEqual(mockUser);
@@ -44,7 +50,7 @@ describe("UserController", () => {
       prismaMock.user.findUnique.mockResolvedValue(null);
 
       try {
-        await user.get(userId);
+        await get(userId);
       } catch (error) {
         expect(error).toBeDefined();
         expect(error).toBeInstanceOf(CustomError);
@@ -58,7 +64,7 @@ describe("UserController", () => {
       prismaMock.user.findUnique.mockRejectedValue(new Error("Database error"));
 
       try {
-        await user.get(userId);
+        await get(userId);
       } catch (error) {
         expect(error).toBeDefined();
         expect(error).toBeInstanceOf(CustomError);
@@ -85,7 +91,7 @@ describe("UserController", () => {
 
       prismaMock.user.update.mockResolvedValue(mockUser);
 
-      const result = await user.update(userId, mockUser);
+      const result = await update(userId, mockUser);
 
       expect(result).toBeDefined();
       expect(result).toEqual(mockUser);
@@ -101,7 +107,7 @@ describe("UserController", () => {
       );
 
       try {
-        await user.update(userId, {});
+        await update(userId, {});
       } catch (error) {
         expect(error).toBeDefined();
         expect(error).toBeInstanceOf(CustomError);
@@ -120,7 +126,7 @@ describe("UserController", () => {
       );
 
       try {
-        await user.update(userId, {});
+        await update(userId, {});
       } catch (error) {
         expect(error).toBeDefined();
         expect(error).toBeInstanceOf(CustomError);
@@ -137,7 +143,7 @@ describe("UserController", () => {
       prismaMock.user.update.mockRejectedValue(new Error("Database error"));
 
       try {
-        await user.update(userId, {});
+        await update(userId, {});
       } catch (error) {
         expect(error).toBeDefined();
         expect(error).toBeInstanceOf(CustomError);
@@ -164,7 +170,7 @@ describe("UserController", () => {
 
       prismaMock.user.delete.mockResolvedValue(mockUser);
 
-      const result = await user.remove(userId);
+      const result = await remove(userId);
 
       expect(result).toBeDefined();
       expect(result).toEqual(mockUser);
@@ -180,7 +186,7 @@ describe("UserController", () => {
       );
 
       try {
-        await user.remove(userId);
+        await remove(userId);
       } catch (error) {
         expect(error).toBeDefined();
         expect(error).toBeInstanceOf(CustomError);
@@ -194,7 +200,7 @@ describe("UserController", () => {
       prismaMock.user.delete.mockRejectedValue(new Error("Database error"));
 
       try {
-        await user.remove(userId);
+        await remove(userId);
       } catch (error) {
         expect(error).toBeDefined();
         expect(error).toBeInstanceOf(CustomError);
@@ -221,7 +227,7 @@ describe("UserController", () => {
 
       prismaMock.user.update.mockResolvedValue(mockUser);
 
-      const result = await user.updatePassword(
+      const result = await updatePassword(
         userId,
         mockUser.password,
         faker.internet.password()
@@ -241,7 +247,7 @@ describe("UserController", () => {
       );
 
       try {
-        await user.updatePassword(
+        await updatePassword(
           userId,
           faker.internet.password(),
           faker.internet.password()
@@ -264,7 +270,7 @@ describe("UserController", () => {
       );
 
       try {
-        await user.updatePassword(
+        await updatePassword(
           userId,
           faker.internet.password(),
           faker.internet.password()
@@ -282,7 +288,7 @@ describe("UserController", () => {
       prismaMock.user.update.mockRejectedValue(new Error("Database error"));
 
       try {
-        await user.updatePassword(
+        await updatePassword(
           userId,
           faker.internet.password(),
           faker.internet.password()

@@ -43,7 +43,6 @@ export async function getAccount(userId: string) {
       throw CustomError.notFound("Account not found");
     }
   } catch (error) {
-    console.log(error);
     if (error instanceof CustomError) {
       throw error;
     } else if (error instanceof PrismaClientKnownRequestError) {
@@ -60,11 +59,8 @@ export async function getAccount(userId: string) {
 }
 
 export interface IAccountInput {
-  balance?: number;
-  blocked?: boolean;
   ceiling?: number;
-  maxOverdraft?: number;
-  refusalCount?: number;
+  max_overdraft?: number;
 }
 
 export async function updateAccount(userId: string, input: IAccountInput) {
@@ -82,11 +78,48 @@ export async function updateAccount(userId: string, input: IAccountInput) {
         user_id: userId,
       },
       data: {
-        balance: input.balance,
-        blocked: input.blocked,
         ceiling: input.ceiling,
-        max_overdraft: input.maxOverdraft,
-        refusal_count: input.refusalCount,
+        max_overdraft: input.max_overdraft,
+      },
+    });
+
+    if (account) {
+      return account;
+    } else {
+      throw CustomError.notFound("Account not found");
+    }
+  } catch (error) {
+    if (error instanceof CustomError) {
+      throw error;
+    } else if (error instanceof PrismaClientKnownRequestError) {
+      switch (error.code) {
+        case "P2025":
+          throw CustomError.badRequest("User not found");
+        default:
+          throw CustomError.internalServerError();
+      }
+    } else {
+      throw CustomError.internalServerError();
+    }
+  }
+}
+
+export async function addCreditCard(userId: string, cardId: string) {
+  try {
+    const account = await prisma.account.update({
+      select: {
+        balance: true,
+        blocked: true,
+        ceiling: true,
+        credit_card: true,
+        refusal_count: true,
+        max_overdraft: true,
+      },
+      data: {
+        credit_card: cardId,
+      },
+      where: {
+        user_id: userId,
       },
     });
 
@@ -113,4 +146,6 @@ export async function updateAccount(userId: string, input: IAccountInput) {
 
 export default {
   getAccount,
+  updateAccount,
+  addCreditCard,
 };

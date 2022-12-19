@@ -109,6 +109,55 @@ router
   });
 
 router
+  .route("/credit-card/:id/charge")
+  .all(authorization)
+  .post(async (req: CustomRequest, res: CustomResponse) => {
+    try {
+      const bodyValidator = z.object({
+        amount: z
+          .number({
+            required_error: "Amount is required",
+            invalid_type_error: "Amount must be a number",
+          })
+          .int("Amount must be an integer")
+          .positive("Amount must be a positive number"),
+      });
+
+      const parsedBody = await bodyValidator.parseAsync(req.body);
+
+      await transactionController.creditCardTransaction({
+        amount: parsedBody.amount,
+        creditCardId: req.params.id,
+        recipientId: req.userId!,
+      });
+
+      res.status(201).json({
+        success: true,
+        data: {
+          message: "Transaction successful",
+        },
+      });
+    } catch (error) {
+      if (error instanceof ZodError) {
+        res.status(400).json({
+          success: false,
+          error: error.issues[0].message,
+        });
+      } else if (error instanceof CustomError) {
+        res.status(error.statusCode).json({
+          success: false,
+          error: error.message,
+        });
+      } else {
+        res.status(500).json({
+          success: false,
+          error: "Internal server error",
+        });
+      }
+    }
+  });
+
+router
   .route("/users/me/transactions")
   .all(authorization)
   .get(async (req: CustomRequest, res: CustomResponse) => {
