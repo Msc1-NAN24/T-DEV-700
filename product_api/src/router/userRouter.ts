@@ -5,14 +5,15 @@ import { z, ZodError } from "zod";
 import crypto from "crypto";
 import { User } from "@prisma/client";
 import authorization from "../middleware/authorize";
-import { create, getAll, getById, update } from "../services/userService";
+import UserService from "../services/userService";
 
 const router = Router();
+const userService = new UserService();
 
-router.all("/user", authorization);
+router.use(authorization);
 router.get("/", async (req: Request, res: CustomResponse) => {
   try {
-    const users = await getAll();
+    const users = await userService.getAll();
     return res.status(200).json({ success: true, data: users });
   } catch (err) {
     console.error(err);
@@ -26,7 +27,7 @@ router.get("/", async (req: Request, res: CustomResponse) => {
 router.get("/:id", async (req: Request, res: CustomResponse) => {
   try {
     const { id } = req.params;
-    const users = await getById(id);
+    const users = await userService.getById(id);
     return res.status(200).json({ success: true, data: users });
   } catch (err) {
     if (err instanceof PrismaClientKnownRequestError)

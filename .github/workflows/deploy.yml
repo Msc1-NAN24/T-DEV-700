@@ -1,0 +1,30 @@
+name: Deploy
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git pull
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{secrets.SSH_HOST}}
+          password: ${{secrets.SSH_PASSWORD}}
+          username: ${{secrets.SSH_USERNAME}}
+          script: |
+            cd /home/debian/T-DEV-700
+            git checkout develop
+            git pull
+
+      - name: docker Build
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{secrets.SSH_HOST}}
+          password: ${{secrets.SSH_PASSWORD}}
+          username: ${{secrets.SSH_USERNAME}}
+          script: |
+            cd /home/debian/T-DEV-700
+            docker-compose -f docker-compose-prod.yml up --build -d

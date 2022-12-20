@@ -74,7 +74,6 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
   });
 
   try {
-    console.log("create User");
     const body = bodyValidator.parse(req.body);
     const user = await create(body);
 

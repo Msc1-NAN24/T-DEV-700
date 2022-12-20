@@ -1,12 +1,20 @@
-import { Prisma, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import prisma from "../client";
+import crypto from "crypto";
 
-export const create = async (newUser: Prisma.UserCreateInput) => {
-  const user = await prisma.user.create({
-    data: newUser,
-  });
-  return user;
-};
+export default class UserService {
+  create = async (newUser: any) => {
+    const user = await prisma.user.create({
+      data: {
+        ...newUser,
+        password: crypto
+          .createHash("sha256")
+          .update(newUser.password)
+          .digest("hex"),
+      },
+    });
+    return user;
+  };
 
 export const getAll = async () => {
   const allUsers = await prisma.user.findMany({
