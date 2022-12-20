@@ -27,11 +27,23 @@ public:
      */
     bool receiveFrom(String userID, int amount);
 
-
+    /**
+     * @brief receive value from the card of the consumer account to the connected account
+     *
+     * @param NFCID id of nfc card
+     * @param amount amount to send
+     * @return true if the transaction is a success
+     */
     bool receiveFromNFC(String NFCID, int amount);
 
 private:
 
+    /**
+     * @brief get the jwt token to the server if the user is not connected
+     *
+     * @return true
+     * @return false
+     */
     bool login();
 
     String username;
