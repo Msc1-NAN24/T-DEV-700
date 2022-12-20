@@ -161,7 +161,12 @@ router
   .all(authorization)
   .get(async (req: CustomRequest, res: CustomResponse) => {
     try {
-      const cheque = await chequeController.getCurrentChequeUuid(req.userId!);
+      let cheque = await chequeController.getCurrentChequeUuid(req.userId!);
+
+      if (cheque === null) {
+        cheque = await chequeController.regenerateCheque(req.userId!);
+      }
+
       res.json({
         success: true,
         data: cheque,
