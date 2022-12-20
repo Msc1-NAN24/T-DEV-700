@@ -16,7 +16,7 @@ BankApi::BankApi(String ip, int port, String user, String password) {
 
 bool BankApi::receiveFrom(String userID, int amount) {//TODO: mettre l'animation de process dans la fonction d'api
     bool sortie = true;
-    this->http->begin(*this->client, this->ip, this->port, URL_USER + userID + URL_PAYMENT);
+    this->http->begin(*this->client, this->ip, this->port, URL_CHEQUE + userID + URL_PAYMENT);
     this->http->addHeader("Authorization", "Bearer " + this->token);
     this->http->addHeader("Content-Type", "application/json");
     int resp = this->http->POST("{\"amount\": " + String(amount) + "}");
@@ -36,19 +36,19 @@ bool BankApi::receiveFrom(String userID, int amount) {//TODO: mettre l'animation
 
 bool BankApi::receiveFromNFC(String NFCID, int amount) {
     bool sortie = true;
-    this->http->begin(*this->client, this->ip, this->port, URL_USER "nfc/" + NFCID + URL_PAYMENT);
+    this->http->begin(*this->client, this->ip, this->port, URL_CARD + NFCID + URL_PAYMENT);
     this->http->addHeader("Authorization", "Bearer " + this->token);
     this->http->addHeader("Content-Type", "application/json");
     int resp = this->http->POST("{\"amount\": " + String(amount) + "}");
-    if (resp != 201) {
+    if (resp == 401) {  // 401 = Unauthorized
+        this->login();
+        this->receiveFromNFC(NFCID, amount);
+    } else if (resp != 201) {
         Serial.println("Error while sending money (NFC) : ");
         Serial.println(resp);
         Serial.println(this->http->errorToString(resp));
         Serial.println(this->http->getString());
         sortie = false;
-    } else if (resp == 401) {  // 401 = Unauthorized
-        this->login();
-        this->receiveFromNFC(NFCID, amount);
     }
     this->http->end();
     return sortie;
@@ -70,7 +70,8 @@ bool BankApi::login() {
     } else {
         JSONVar json = JSON.parse(this->http->getString());
         String temp = json.stringify(json["data"]["token"]);
-        this->token = temp.substring(temp.indexOf(":") + 2, temp.length() - 2);
+        Serial.print(temp);
+        this->token = temp.substring(1, temp.length() - 1);
         Serial.println(this->token);
     }
     this->http->end();
