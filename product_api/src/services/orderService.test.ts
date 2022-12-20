@@ -1,10 +1,11 @@
 import { Product, User } from "@prisma/client";
 import { join } from "path";
-import { create } from "./userService";
 import OrderService from "./orderService";
 import prisma from "../client";
 import { randomUUID } from "crypto";
+import UserService from "./userService";
 
+const userService = new UserService();
 test("should be defined", () => {
   const instance = new OrderService();
   expect(instance).toBeDefined();
@@ -58,7 +59,7 @@ beforeEach(async () => {
 });
 
 test("createOrder", async () => {
-  const user = await create({
+  const user = await userService.create({
     username: "Rich",
     email: "hello@prisma.io",
     password: "hello",
@@ -81,7 +82,7 @@ test("createOrder", async () => {
 });
 
 test("createOrder invalid product", async () => {
-  const user = await create({
+  const user = await userService.create({
     username: "Rich",
     email: "hello@prisma.io",
     password: "hello",
@@ -104,7 +105,7 @@ test("createOrder invalid product", async () => {
 });
 
 test("getAllOrder", async () => {
-  const user = await create({
+  const user = await userService.create({
     username: "Rich",
     email: "hello@prisma.io",
     password: "hello",
@@ -133,7 +134,7 @@ test("getAllOrder", async () => {
 });
 
 test("getOrderById", async () => {
-  const user = await create({
+  const user = await userService.create({
     username: "Rich",
     email: "hello@prisma.io",
     password: "hello",
@@ -157,7 +158,7 @@ test("getOrderById", async () => {
 });
 
 test("getOrderByUserID", async () => {
-  const user = await create({
+  const user = await userService.create({
     username: "Rich",
     email: "hello@prisma.io",
     password: "hello",

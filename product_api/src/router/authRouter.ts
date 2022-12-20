@@ -3,11 +3,12 @@ import crypto from "crypto";
 import z from "zod";
 import { CustomResponse } from "../types/response";
 import AuthService from "../services/authService";
-import { create } from "../services/userService";
 import prisma from "../client";
+import UserService from "../services/userService";
 
 const router = Router();
 const authService = new AuthService();
+const userService = new UserService();
 
 router.post("/login", async (req: Request, res: CustomResponse) => {
   try {
@@ -75,7 +76,7 @@ router.post("/register", async (req: Request, res: CustomResponse) => {
 
   try {
     const body = bodyValidator.parse(req.body);
-    const user = await create(body);
+    const user = await userService.create(body);
 
     return res.status(201).json({
       success: true,

@@ -16,40 +16,41 @@ export default class UserService {
     return user;
   };
 
-export const getAll = async () => {
-  const allUsers = await prisma.user.findMany({
-    select: { email: true, id: true, orders: true, username: true },
-  });
-  return allUsers;
-};
+  getAll = async () => {
+    const allUsers = await prisma.user.findMany({
+      select: { email: true, id: true, orders: true, username: true },
+    });
+    return allUsers;
+  };
 
-export const getById = async (id: string) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      id,
-    },
-    select: { email: true, id: true, orders: true, username: true },
-  });
-  return user;
-};
+  getById = async (id: string) => {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: { email: true, id: true, orders: true, username: true },
+    });
+    return user;
+  };
 
-export const update = async (id: string, userUpdate: Partial<User>) => {
-  const user = await prisma.user.update({
-    where: {
-      id,
-    },
-    select: { email: true, id: true, orders: true, username: true },
-    data: { ...userUpdate },
-  });
-  return user;
-};
+  update = async (id: string, userUpdate: Partial<User>) => {
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      select: { email: true, id: true, orders: true, username: true },
+      data: { ...userUpdate },
+    });
+    return user;
+  };
 
-export const deleteUser = async (id: string) => {
-  const user = await prisma.user.delete({
-    where: {
-      id,
-    },
-    select: { email: true, id: true, username: true },
-  });
-  return user;
-};
+  deleteUser = async (id: string) => {
+    const user = await prisma.user.delete({
+      where: {
+        id,
+      },
+      select: { email: true, id: true, username: true },
+    });
+    return user;
+  };
+}

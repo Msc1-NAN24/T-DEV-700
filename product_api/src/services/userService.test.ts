@@ -1,8 +1,10 @@
 import { User } from "@prisma/client";
 import { randomUUID } from "crypto";
-import { create, deleteUser, getAll, getById, update } from "./userService";
+import UserService from "./userService";
 import { join } from "path";
 import prisma from "../client";
+
+const userService = new UserService();
 
 const uuid = randomUUID();
 const user: User = {
@@ -36,11 +38,15 @@ afterEach(async () => {
 });
 
 test("should create new user ", async () => {
-  const res = await create(user);
+  const res = await userService.create({
+    username: "Rich",
+    email: "hello@prisma.io",
+    password: "hello",
+  });
 
   expect(res.username).toEqual(user.username);
   expect(res.email).toEqual(user.email);
-  expect(res.password).toEqual(user.password);
+  expect(res.password).not.toEqual("hello");
 });
 
 test("Should get by ID", async () => {
@@ -52,7 +58,7 @@ test("Should get by ID", async () => {
       password: "hello",
     },
   });
-  const res = await getById(user.id);
+  const res = await userService.getById(user.id);
 
   expect(res?.id).toEqual(user.id);
   expect(res?.username).toEqual(user.username);
@@ -60,8 +66,8 @@ test("Should get by ID", async () => {
 });
 
 test("Update", async () => {
-  await create(user);
-  const res = await update(user.id, { username: "Billy" });
+  await userService.create(user);
+  const res = await userService.update(user.id, { username: "Billy" });
 
   expect(res?.username).toEqual("Billy");
 });
@@ -76,17 +82,17 @@ test("Should getAll", async () => {
 
   await prisma.user.create({ data: user });
   await prisma.user.create({ data: user2 });
-  const res = await getAll();
+  const res = await userService.getAll();
   expect(res).toBeDefined();
 
   expect(res.length).toEqual(2);
 });
 
 test("Delete", async () => {
-  await create(user);
+  await userService.create(user);
 
-  await deleteUser(user.id);
-  const res = await getAll();
+  await userService.deleteUser(user.id);
+  const res = await userService.getAll();
   expect(res.length).toEqual(0);
 });
 
@@ -97,9 +103,9 @@ test("Test error email no unique ", async () => {
     email: "hello@prisma.io",
     password: "hello",
   };
-  await create(user);
+  await userService.create(user);
 
-  expect(create(user2)).rejects.toThrow();
+  expect(userService.create(user2)).rejects.toThrow();
 });
 
 test("Test error username no unique ", async () => {
@@ -109,7 +115,7 @@ test("Test error username no unique ", async () => {
     email: "test@prisma.io",
     password: "hello",
   };
-  await create(user);
+  await userService.create(user);
 
-  expect(create(user2)).rejects.toThrow();
+  expect(userService.create(user2)).rejects.toThrow();
 });

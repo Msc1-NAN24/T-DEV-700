@@ -84,7 +84,7 @@ router.post("/", async (req: Request, res: CustomResponse) => {
   try {
     console.log("create User");
     const body = bodyValidator.parse(req.body);
-    const user = await create({
+    const user = await userService.create({
       ...body,
       password: crypto.createHash("sha256").update(body.password).digest("hex"),
     });
@@ -136,7 +136,7 @@ router.patch("/:id", async (req: Request, res: CustomResponse) => {
   try {
     const { id } = req.params;
     const body = bodyValidator.parse(req.body);
-    const users = await update(id, body as Partial<User>);
+    const users = await userService.update(id, body as Partial<User>);
     return res.status(200).json({ success: true, data: users });
   } catch (err) {
     if (err instanceof PrismaClientKnownRequestError)
