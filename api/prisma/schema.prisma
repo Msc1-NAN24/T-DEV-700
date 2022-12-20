@@ -25,7 +25,7 @@ model User {
 model Account {
   id            String   @id @default(uuid())
   credit_card   String?  @unique
-  cheque_uuid   String?  @unique
+  cheque_uuid   String   @unique @default(uuid())
   balance       Int      @default(0)
   refusal_count Int      @default(0)
   ceiling       Int      @default(100)
