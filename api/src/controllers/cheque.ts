@@ -1,7 +1,7 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import prisma from "../client";
 import { CustomError } from "../types/error";
-import uuid from "uuid";
+import * as uuid from "uuid";
 
 export async function getCurrentChequeUuid(userId: string) {
   try {
@@ -98,6 +98,8 @@ export async function regenerateCheque(userId: string) {
       throw CustomError.notFound("Account not found");
     }
   } catch (error) {
+    console.error(error);
+
     if (error instanceof CustomError) {
       throw error;
     } else if (error instanceof PrismaClientKnownRequestError) {
