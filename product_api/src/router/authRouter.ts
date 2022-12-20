@@ -1,10 +1,10 @@
 import { Router, Request } from "express";
+import crypto from "crypto";
+import z from "zod";
 import { CustomResponse } from "../types/response";
 import AuthService from "../services/authService";
+import prisma from "../client";
 import UserService from "../services/userService";
-import crypto from "crypto";
-import { prisma } from "..";
-import z from "zod";
 
 const router = Router();
 const authService = new AuthService();
@@ -12,6 +12,8 @@ const userService = new UserService();
 
 router.post("/login", async (req: Request, res: CustomResponse) => {
   try {
+    console.log("test");
+
     const body: { email: string; password: string } = req.body;
     const user = await prisma.user.findUnique({
       where: {
