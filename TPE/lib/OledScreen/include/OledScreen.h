@@ -18,7 +18,6 @@ public:
 
     /**
      * @brief display welcome screen
-     *
      */
     void welcome();
 

@@ -15,7 +15,6 @@ OledScreen::OledScreen(int screenWidth, int screenHeight, int oledResetPin) {
     this->display->clearDisplay();
 }
 
-
 void OledScreen::welcome() {
     this->display->clearDisplay();
     this->display->setCursor(0, 0);
@@ -24,7 +23,6 @@ void OledScreen::welcome() {
     this->display->println(F("\nBienvenue!"));
     this->display->display();
 }
-
 
 void OledScreen::printAmount(int amount) {
     this->display->clearDisplay();
@@ -54,7 +52,7 @@ void OledScreen::process() {
         this->display->println(F(" Patienter"));
         this->display->drawBitmap(16, 16, process_allArray[i], 96, 48, WHITE);
         this->display->display();
-        delay(20);  // FIXME: use a timer
+        delay(20);
     }
 }
 
@@ -63,7 +61,7 @@ void OledScreen::validateAnimation() {
         this->display->clearDisplay();
         this->display->drawBitmap(32, 0, epd_bitmap_allArray[i], 64, 64, WHITE);
         this->display->display();
-        delay(20);  // FIXME: use a timer
+        delay(20);
     }
     delay(500);
     this->display->clearDisplay();
@@ -81,7 +79,7 @@ void OledScreen::errorAnimation(String message) {
         this->display->clearDisplay();
         this->display->drawBitmap(32, 7, error_allArray[i], 64, 51, WHITE);
         this->display->display();
-        delay(20);  // FIXME: use a timer
+        delay(20);
     }
     delay(200);
     this->display->clearDisplay();
@@ -95,7 +93,6 @@ void OledScreen::errorAnimation(String message) {
     delay(5000);
 }
 
-
 void OledScreen::wifiWaiting() {
     this->clear();
     this->display->setCursor(0, 0);
@@ -106,7 +103,6 @@ void OledScreen::wifiWaiting() {
     this->display->println();
     this->display->display();
 }
-
 
 void OledScreen::clear() {
     this->display->clearDisplay();
