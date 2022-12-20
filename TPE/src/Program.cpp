@@ -98,7 +98,7 @@ void Program::loop() {
             }
         } else {
             //TODO: faire process nfc
-            bool transaction = this->bank->receiveFrom(nfcTram, amount);
+            bool transaction = this->bank->receiveFromNFC(nfcTram, amount);
             this->screen->process();
             if (!transaction) {
                 this->screen->errorAnimation(" Transac: \n   Bank   ");
