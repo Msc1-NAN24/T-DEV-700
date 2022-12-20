@@ -2,9 +2,9 @@ import { Router, Request } from "express";
 import crypto from "crypto";
 import z from "zod";
 import { CustomResponse } from "../types/response";
-import { prisma } from "..";
 import AuthService from "../services/authService";
 import { create } from "../services/userService";
+import prisma from "../client";
 
 const router = Router();
 const authService = new AuthService();

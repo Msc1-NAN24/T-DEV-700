@@ -40,15 +40,6 @@ export default class ItemService {
   };
 
   getByOrderId = async (orderId: string) => {
-    const itemOrder = prisma.item.findMany({ where: { orderId } });
-  };
-
-  setOrder = async (order: Order, item: Item) => {
-    return await prisma.item.update({
-      where: { id: item.id },
-      data: {
-        orderId: order.id,
-      },
-    });
+    return await prisma.item.findMany({ where: { orderId } });
   };
 }

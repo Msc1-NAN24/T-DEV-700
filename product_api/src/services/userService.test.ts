@@ -1,9 +1,8 @@
-import { prismaMock } from "./../singleton";
 import { User } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { create, deleteUser, getAll, getById, update } from "./userService";
-import { execSync } from "child_process";
 import { join } from "path";
+import prisma from "../client";
 
 const uuid = randomUUID();
 const user: User = {
@@ -22,24 +21,38 @@ const prismaBinary = join(
   "prisma"
 );
 
-beforeEach(() => {
-  execSync(`${prismaBinary} migrate reset --force`);
-  execSync(`${prismaBinary} migrate deploy`);
+beforeEach(async () => {
+  await prisma.user.deleteMany();
+  await prisma.product.deleteMany();
+  await prisma.order.deleteMany();
+  await prisma.item.deleteMany();
+});
+
+afterEach(async () => {
+  await prisma.user.deleteMany();
+  await prisma.product.deleteMany();
+  await prisma.order.deleteMany();
+  await prisma.item.deleteMany();
 });
 
 test("should create new user ", async () => {
   const res = await create(user);
 
-  expect(res.id).toEqual(user.id);
   expect(res.username).toEqual(user.username);
   expect(res.email).toEqual(user.email);
   expect(res.password).toEqual(user.password);
 });
 
 test("Should get by ID", async () => {
-  await create(user);
+  await prisma.user.create({
+    data: {
+      id: uuid,
+      username: "Rich",
+      email: "hello@prisma.io",
+      password: "hello",
+    },
+  });
   const res = await getById(user.id);
-  expect(res).toBeDefined();
 
   expect(res?.id).toEqual(user.id);
   expect(res?.username).toEqual(user.username);
@@ -61,8 +74,8 @@ test("Should getAll", async () => {
     password: "hello",
   };
 
-  await create(user);
-  await create(user2);
+  await prisma.user.create({ data: user });
+  await prisma.user.create({ data: user2 });
   const res = await getAll();
   expect(res).toBeDefined();
 
@@ -71,6 +84,7 @@ test("Should getAll", async () => {
 
 test("Delete", async () => {
   await create(user);
+
   await deleteUser(user.id);
   const res = await getAll();
   expect(res.length).toEqual(0);
@@ -91,15 +105,11 @@ test("Test error email no unique ", async () => {
 test("Test error username no unique ", async () => {
   const user2: User = {
     id: randomUUID(),
-    username: "RIch",
+    username: "Rich",
     email: "test@prisma.io",
     password: "hello",
   };
   await create(user);
 
   expect(create(user2)).rejects.toThrow();
-});
-
-test("sum", () => {
-  expect(2 + 3).toEqual(5);
 });

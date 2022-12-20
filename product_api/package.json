@@ -12,10 +12,10 @@
     "db:reset": "prisma migrate reset --force",
     "dev": "nodemon src/index.ts",
     "lint": "prettier . --write",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:cw": "jest --coverage --watch",
-    "test:watch": "jest ",
+    "test": "jest --maxWorkers=1",
+    "test:coverage": "jest --coverage --maxWorkers=1",
+    "test:cw": "jest --coverage --watch  --maxWorkers=1",
+    "test:watch": "jest --watch  --maxWorkers=1",
     "swagger-autogen": "node swagger.js"
   },
   "dependencies": {

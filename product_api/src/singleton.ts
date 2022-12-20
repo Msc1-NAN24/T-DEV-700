@@ -19,10 +19,11 @@ const prismaBinary = join(
   "prisma"
 );
 
-beforeEach(() => {
-  execSync(`${prismaBinary} migrate reset --force`);
-  execSync(`${prismaBinary} migrate deploy`);
-  mockReset(prismaMock);
+beforeEach(async () => {
+  await prisma.user.deleteMany();
+  await prisma.product.deleteMany();
+  await prisma.order.deleteMany();
+  await prisma.item.deleteMany();
 });
 
 export const prismaMock = prisma as unknown as DeepMockProxy<PrismaClient>;

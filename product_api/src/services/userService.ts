@@ -1,9 +1,9 @@
-import { User } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import prisma from "../client";
 
-export const create = async (newUser: any) => {
+export const create = async (newUser: Prisma.UserCreateInput) => {
   const user = await prisma.user.create({
-    data: { ...newUser },
+    data: newUser,
   });
   return user;
 };
@@ -41,7 +41,7 @@ export const deleteUser = async (id: string) => {
     where: {
       id,
     },
-    select: { email: true, id: true, orders: true, username: true },
+    select: { email: true, id: true, username: true },
   });
   return user;
 };

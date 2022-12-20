@@ -31,7 +31,7 @@ model Order {
   id      String @id @default(uuid())
   product Item[] @relation(name: "order")
   price   Float
-  user    User   @relation(fields: [userId], references: [id], name: "user")
+  user    User   @relation(fields: [userId], references: [id], name: "user", onDelete: Cascade, onUpdate: Cascade)
   userId  String
 }
 

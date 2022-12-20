@@ -12,43 +12,41 @@ export default class OrderService {
     userID: string;
     orderProduct: IOrderProduct[];
   }) => {
-    try {
-      const { userID, orderProduct } = orderInfo;
-      const items = await this.itemService.generateMany(orderProduct);
+    // try {
+    const { userID, orderProduct } = orderInfo;
+    const items = await this.itemService.generateMany(orderProduct);
 
-      const totalPrice = items
-        .map((item) => item!.price * item!.quantity)
-        .reduce((acc, value) => acc + value);
+    const totalPrice = items
+      .map((item) => item!.price * item!.quantity)
+      .reduce((acc, value) => acc + value);
 
-      await prisma.user.update({ where: { id: userID }, data: {} });
-
-      const order = await prisma.order.create({
-        select: {
-          user: {
-            select: { id: true, email: true, password: true, username: true },
-          },
-          product: { select: { product: true, price: true, quantity: true } },
-          id: true,
-          price: true,
+    const order = await prisma.order.create({
+      select: {
+        user: {
+          select: { id: true, email: true, password: true, username: true },
         },
-        data: {
-          price: totalPrice,
-          product: {
-            createMany: {
-              data: items,
-            },
-          },
-          user: {
-            connect: {
-              id: userID,
-            },
+        product: { select: { product: true, price: true, quantity: true } },
+        id: true,
+        price: true,
+      },
+      data: {
+        price: totalPrice,
+        product: {
+          createMany: {
+            data: items,
           },
         },
-      });
-      return order;
-    } catch (error) {
-      console.log(error);
-    }
+        user: {
+          connect: {
+            id: userID,
+          },
+        },
+      },
+    });
+    return order;
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   getAllOrder = async () => {
