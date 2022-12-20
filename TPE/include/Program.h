@@ -13,12 +13,12 @@
 class Program {
 public:
     /**
-     * Program startup
+     * @brief Program setup
      */
     Program();
 
     /**
-     * Program main loop
+     * @brief Program main loop
      */
     void loop();
 
@@ -33,7 +33,6 @@ private:
 
     /**
      * @brief tram envoyer en serie par l'app
-     *
      */
     String tram;
 
