@@ -24,7 +24,7 @@ bool BankApi::receiveFrom(String userID, int amount) {//TODO: mettre l'animation
         this->login();
         this->receiveFrom(userID, amount);
     } else if (resp != 201) {
-        Serial.println("Error while sending money");
+        Serial.print("Error while sending money (QR) : ");
         Serial.println(resp);
         Serial.println(this->http->errorToString(resp));
         Serial.println(this->http->getString());
@@ -41,7 +41,7 @@ bool BankApi::receiveFromNFC(String NFCID, int amount) {
     this->http->addHeader("Content-Type", "application/json");
     int resp = this->http->POST("{\"amount\": " + String(amount) + "}");
     if (resp != 201) {
-        Serial.println("Error while sending money");
+        Serial.println("Error while sending money (NFC) : ");
         Serial.println(resp);
         Serial.println(this->http->errorToString(resp));
         Serial.println(this->http->getString());
@@ -70,7 +70,7 @@ bool BankApi::login() {
     } else {
         JSONVar json = JSON.parse(this->http->getString());
         String temp = json.stringify(json["data"]["token"]);
-        this->token = temp.substring(1, temp.length() - 1);
+        this->token = temp.substring(temp.indexOf(":") + 2, temp.length() - 2);
         Serial.println(this->token);
     }
     this->http->end();
