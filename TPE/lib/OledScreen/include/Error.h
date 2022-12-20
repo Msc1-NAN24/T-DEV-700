@@ -1,3 +1,12 @@
+/**
+ * @file Error.h
+ * @author Clément Boesmier (clement.boesmier@epitech.eu)
+ * @brief error annimation
+ * @version 0.1
+ * @date 2022-12-20
+ *
+ */
+
 #ifndef ERROR_H
 #define ERROR_H
 
