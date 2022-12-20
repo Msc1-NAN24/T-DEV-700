@@ -181,7 +181,7 @@ router
         throw CustomError.badRequest("Cheque is not valid");
       }
 
-      await chequeController.regenerateCheque(req.userId!);
+      await chequeController.regenerateCheque(user);
 
       await transactionController.transaction({
         amount: parsedBody.amount,
