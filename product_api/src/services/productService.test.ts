@@ -103,31 +103,3 @@ test("Delete", async () => {
   const res = await productService.getAll();
   expect(res.length).toEqual(0);
 });
-
-// test("Test error email no unique ", async () => {
-//   const user2: product = {
-//     id: randomUUID(),
-//     username: "Bob",
-//     email: "hello@prisma.io",
-//     password: "hello",
-//   };
-//   await create(product);
-
-//   expect(create(user2)).rejects.toThrow();
-// });
-
-// test("Test error username no unique ", async () => {
-//   const user2: product = {
-//     id: randomUUID(),
-//     username: "RIch",
-//     email: "test@prisma.io",
-//     password: "hello",
-//   };
-//   await create(product);
-
-//   expect(create(user2)).rejects.toThrow();
-// });
-
-// test("sum", () => {
-//   expect(2 + 3).toEqual(5);
-// });
