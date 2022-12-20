@@ -106,7 +106,7 @@ export async function login(input: ILoginInput) {
       }
     );
 
-    return { token };
+    return token;
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       switch (error.code) {
