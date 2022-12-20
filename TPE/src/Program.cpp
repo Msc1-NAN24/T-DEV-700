@@ -43,7 +43,9 @@ void Program::loop() {
         this->tram = sortie;
     } else if (this->tram != "") {
         int amount = this->tram.toInt();
+#ifdef DEBUG
         Serial.println(this->tram);
+#endif
         this->screen->printAmount(amount);
 
         String qrcodeTram = "";
@@ -52,20 +54,21 @@ void Program::loop() {
             qrcodeTram = this->qrCode->read();
             nfcTram = this->NFC->read();
         } while (qrcodeTram == "" && nfcTram == "");
-
+#ifdef DEBUG
         Serial.print("qrcodeTram :");
         Serial.println(qrcodeTram);
-
         Serial.print("nfcTram :");
         Serial.println(nfcTram);
-
+#endif
         this->screen->process();
         if (qrcodeTram != "") {
             if (this->qrCode->getAmount() != amount) {
+#ifdef DEBUG
                 Serial.print("QRcode Error : ");
                 Serial.print(this->qrCode->getAmount());
                 Serial.print(" : ");
                 Serial.println(amount);
+#endif
                 this->tram = "";
                 this->screen->errorAnimation("Valeur QR");
                 return;
@@ -80,7 +83,6 @@ void Program::loop() {
                 this->tram = "";
             }
         } else {
-            //TODO: faire process nfc
             bool transaction = this->bank->receiveFromNFC(nfcTram, amount);
             this->screen->process();
             if (!transaction) {
