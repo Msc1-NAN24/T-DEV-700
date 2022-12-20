@@ -247,13 +247,19 @@ export async function creditCardTransaction(
         credit_card: input.creditCardId,
       },
       include: {
-        user: true,
+        user: {
+          include: {
+            account: true,
+          },
+        },
       },
     });
 
     if (!creditCard) {
       throw CustomError.notFound("Credit card not found");
     }
+
+    const sender = creditCard.user;
 
     const user = await prisma.user.findUnique({
       where: {
@@ -304,8 +310,11 @@ export async function creditCardTransaction(
 
     var isOverdraft = false;
 
-    if (user.account && user.account.balance < input.amount) {
-      if (user.account.max_overdraft < input.amount - user.account.balance) {
+    if (sender.account && sender.account.balance < input.amount) {
+      if (
+        sender.account.max_overdraft <
+        input.amount - sender.account.balance
+      ) {
         await prisma.transaction.update({
           where: {
             id: transaction.id,
@@ -317,7 +326,7 @@ export async function creditCardTransaction(
 
         await prisma.user.update({
           where: {
-            id: user.id,
+            id: sender.id,
           },
           include: {
             account: true,
