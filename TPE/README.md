@@ -2,7 +2,9 @@
 
 ceci et la racine principale du code du TPE connecter
 
-vous trouverez ici tout les fichier source ainsi que le shéma de cablage et la documentation du TPE
+vous trouverez ici tout les fichier source ainsi que le schéma de câblage et la documentation du TPE
+
+Pour la génération de la doc Doxygen le fichier [Doxyfile](./Doxygen/Doxyfile) se trouve dans le dossier Doxygen.
 
 ## mise en place :
 
@@ -46,7 +48,37 @@ vous trouverez ici tout les fichier source ainsi que le shéma de cablage et la 
 
 - pour une utilisation sans le téléphone il faut envoyer la valeur que l'on veut envoyer en centime via le port série émulé par l'esp via un moniteur série comme celui de [putty](https://www.putty.org/) ou [arduino IDE](https://www.arduino.cc/en/software#legacy-ide-18x). la vitesse du port par defaut est 115200
 
-- pour la création des utilisateurs, de leur conte et leur mettre des crédit voir la doc de l'api dans ../api
+- pour la création des utilisateurs, de leur conte et leur mettre des crédit voir la doc de l'api dans ../api _(il faut au minimum)_ :
+
+  - crée 2 utilisateur (un commerçant et un client)
+
+  - mettre des crédit au client _(via l'utilisation de prisa studio)_
+
+  - mettre un des id des badge NFC en id de carte au client _(pour rappel)_ :
+
+    - rond bleu : 77991033
+
+    - carte blanche : A766C64D
+
+  - crées un id de chèque au client (id a utilisation unique)
+
+_seul 1 des 2 dernier point est requit a voir suivant les test voulue_
+
+### pour la création des QRcode chèque :
+
+- récupéré un id de chèque en base
+
+- aller sur un site de création de QRcode (type [qrcode-monkey](https://www.qrcode-monkey.com/#text)) _attention un site qui ne fait pas de qrcode de redirection_
+
+  - format du text qr code : `{"UUID":[ID_chèque],"amount":[PRIX]}` (_ex:_)
+
+    - `{"UUID":"1fa8c95f-e356-4f73-bb33-1571f2d87d62","amount":"100"}`
+
+    - `{"UUID":"89e869d4-1a1a-4d70-81f1-b0572ace8942","amount":"100"}`
+
+    (_rappel tout les prix son en centime_)
+
+    (caque id de qrcode son a utilisation unique)
 
 ### Câblage par défaut:
 
