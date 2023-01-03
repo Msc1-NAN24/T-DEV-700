@@ -70,14 +70,17 @@ void Program::loop() {
                 Serial.println(amount);
 #endif
                 this->tram = "";
+                Serial.println("{ \"status\":\"NOK\", \"errorType\" : \"QRcode\" }");
                 this->screen->errorAnimation("Valeur QR");
                 return;
             } else {
                 bool transaction = this->bank->receiveFrom(this->qrCode->getUuid(), this->qrCode->getAmount());
                 this->screen->process();
                 if (!transaction) {
+                    Serial.println("{ \"status\":\"NOK\", \"errorType\" : \"Bank\" }");
                     this->screen->errorAnimation(" Transac: \n   Bank   ");
                 } else {
+                    Serial.println("{\"status\":\"OK\"}");
                     this->screen->validateAnimation();
                 }
                 this->tram = "";
@@ -86,8 +89,10 @@ void Program::loop() {
             bool transaction = this->bank->receiveFromNFC(nfcTram, amount);
             this->screen->process();
             if (!transaction) {
+                Serial.println("{ \"status\":\"NOK\", \"errorType\" : \"Bank\" }");
                 this->screen->errorAnimation(" Transac: \n   Bank   ");
             } else {
+                Serial.println("{\"status\":\"OK\"}");
                 this->screen->validateAnimation();
             }
             this->tram = "";
