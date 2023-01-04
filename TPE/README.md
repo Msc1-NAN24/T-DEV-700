@@ -4,7 +4,11 @@ ceci et la racine principale du code du TPE connecter
 
 vous trouverez ici tout les fichier source ainsi que le schéma de câblage et la documentation du TPE
 
-Pour la génération de la doc Doxygen le fichier [Doxyfile](./Doxygen/Doxyfile) se trouve dans le dossier Doxygen.
+Pour la génération de la doc Doxygen le fichier [Doxyfile](./docs/Doxyfile) se trouve dans le docs.
+
+il crées par defaut la [sortie](./docs/Doxygen%20output) dans "docs/Doxygen output"
+
+il utilise aussi graphviz pour généré les graphique
 
 ## mise en place :
 
@@ -23,8 +27,6 @@ Pour la génération de la doc Doxygen le fichier [Doxyfile](./Doxygen/Doxyfile)
   - attendre la fin du processus
 
 - si l'affichage `==== [SUCCESS] Took XX.XX seconds =====` apparaît la compilation et l'upload du code dans le TPE c'est bien passé.
-
-  - si non contacter @clément Boesmier sur teams ^^
 
 ### Installation :
 
