@@ -1,0 +1,25 @@
+@startuml
+
+package "TPE" as tpe{
+    node "ESP 32" as esp
+    [Ecran Oled] as oled
+    [Lecteur Qrcode] as qr
+    [Lecteur NFC] as nfc
+
+    oled <-- esp : "I2C"
+    esp - qr : "UART"
+    nfc - esp : "SPI"
+}
+
+package "Banque"
+
+package "Télepone" as tel {
+    node application
+}
+
+esp -- tel  : "USB serie"
+
+
+Banque .. esp : "HTTP"
+
+@enduml
