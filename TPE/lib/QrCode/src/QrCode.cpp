@@ -14,7 +14,7 @@ void QrCode::readRequest() {
     do {
         Serial2.println("~T.");
         this->mili = millis();
-        delay(700);//TODO: rm delay
+        delay(700);
         if (Serial2.available() > 0) {
             while (Serial2.available() > 0) {
                 sortie += (char)Serial2.read();
@@ -35,7 +35,7 @@ String QrCode::read() {
         this->result += sortie;
     }
     return sortie;
-}//TODO: retourner un bool et faire le traitement de la requet dans une autre fonction
+}
 
 int QrCode::getAmount() {
     int amount = 0;
