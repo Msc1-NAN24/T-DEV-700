@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node .",
     "build": "tsc",
+    "test": "jest -i",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate deploy",
-    "test": "jest -i",
     "db:reset": "prisma migrate reset --force",
     "dev": "nodemon src/index.ts",
     "lint": "prettier . --write",

@@ -28,7 +28,6 @@ il utilise aussi graphviz pour généré les graphiques.
 
 ![image](https://user-images.githubusercontent.com/16057094/211200016-746c32a3-2fb4-495b-8f92-be7c00f88e6b.png)
 
-
 ### Installation :
 
 - brancher une des prises du lecteur QRcode a une alimentation (ou au téléphone via hub)

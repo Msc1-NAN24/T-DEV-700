@@ -12,18 +12,18 @@ export interface ITransactionInput {
 
 export async function transaction(input: ITransactionInput) {
   try {
-    const receiver = await prisma.user.findUnique({
+    const sender = await prisma.user.findUnique({
       where: {
-        id: input.recipientId,
+        id: input.senderId,
       },
       include: {
         account: true,
       },
     });
 
-    const sender = await prisma.user.findUnique({
+    const receiver = await prisma.user.findUnique({
       where: {
-        id: input.senderId,
+        id: input.recipientId,
       },
       include: {
         account: true,
@@ -308,6 +308,37 @@ export async function creditCardTransaction(
       },
     });
 
+    if (sender.account && sender.account.ceiling < input.amount) {
+      await prisma.transaction.update({
+        where: {
+          id: transaction.id,
+        },
+        data: {
+          status: "REFUSED",
+        },
+      });
+
+      await prisma.user.update({
+        where: {
+          id: sender.id,
+        },
+        include: {
+          account: true,
+        },
+        data: {
+          account: {
+            update: {
+              refusal_count: {
+                increment: 1,
+              },
+            },
+          },
+        },
+      });
+
+      throw CustomError.forbidden("Amount exceeds ceiling");
+    }
+
     var isOverdraft = false;
 
     if (sender.account && sender.account.balance < input.amount) {
@@ -377,8 +408,6 @@ export async function creditCardTransaction(
         status: isOverdraft ? "OVERDRAFT" : "ACCEPTED",
       },
     });
-
-    return transaction;
   } catch (err) {
     if (err instanceof PrismaClientKnownRequestError) {
       throw CustomError.badRequest();

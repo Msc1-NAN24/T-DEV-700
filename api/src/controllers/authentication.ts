@@ -54,7 +54,7 @@ export async function register(input: IRegisterInput) {
       }
     );
 
-    return { token };
+    return token;
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       switch (error.code) {
@@ -111,7 +111,7 @@ export async function login(input: ILoginInput) {
     if (error instanceof PrismaClientKnownRequestError) {
       switch (error.code) {
         case "P2025":
-          throw CustomError.badRequest("User not found");
+          throw CustomError.notFound("User not found");
         default:
           throw CustomError.internalServerError();
       }

@@ -6,10 +6,6 @@ import { CustomError } from "../types/error";
 import prisma from "../client";
 
 export async function get(userId: string) {
-  if (!userId) {
-    throw CustomError.badRequest("Invalid user ID");
-  }
-
   try {
     const user = await prisma.user.findUnique({
       select: {
@@ -42,7 +38,12 @@ export async function get(userId: string) {
     return user;
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
-      throw CustomError.databaseError(error.message);
+      switch (error.code) {
+        case "P2025":
+          throw CustomError.notFound("User not found");
+        default:
+          throw CustomError.internalServerError();
+      }
     } else if (error instanceof CustomError) {
       throw error;
     } else {
@@ -60,10 +61,6 @@ export interface IUpdateUser {
 }
 
 export async function update(userId: string, data: IUpdateUser) {
-  if (!userId) {
-    throw CustomError.badRequest("Invalid user ID");
-  }
-
   try {
     const user = await prisma.user.update({
       data,
@@ -75,13 +72,14 @@ export async function update(userId: string, data: IUpdateUser) {
     return user;
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
-        throw CustomError.conflict("Username or email already in use");
-      } else if (error.code === "P2025") {
-        throw CustomError.notFound("User not found");
-      } else throw CustomError.databaseError(error.message);
-    } else if (error instanceof CustomError) {
-      throw error;
+      switch (error.code) {
+        case "P2025":
+          throw CustomError.notFound("User not found");
+        case "P2002":
+          throw CustomError.badRequest("Invalid user data");
+        default:
+          throw CustomError.internalServerError();
+      }
     } else {
       throw CustomError.internalServerError();
     }
@@ -89,10 +87,6 @@ export async function update(userId: string, data: IUpdateUser) {
 }
 
 export async function remove(userId: string) {
-  if (!userId) {
-    throw CustomError.badRequest("Invalid user ID");
-  }
-
   try {
     const user = await prisma.user.delete({
       where: {
@@ -103,11 +97,12 @@ export async function remove(userId: string) {
     return user;
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === "P2025") {
-        throw CustomError.notFound("User not found");
-      } else throw CustomError.databaseError(error.message);
-    } else if (error instanceof CustomError) {
-      throw error;
+      switch (error.code) {
+        case "P2025":
+          throw CustomError.notFound("User not found");
+        default:
+          throw CustomError.internalServerError();
+      }
     } else {
       throw CustomError.internalServerError();
     }
@@ -119,10 +114,6 @@ export async function updatePassword(
   oldPassword: string,
   newPassword: string
 ) {
-  if (!userId || !oldPassword || !newPassword) {
-    throw CustomError.badRequest("Invalid password data");
-  }
-
   try {
     const user = await prisma.user.findUnique({
       select: {
@@ -158,7 +149,14 @@ export async function updatePassword(
     };
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
-      throw CustomError.databaseError(error.message);
+      switch (error.code) {
+        case "P2025":
+          throw CustomError.notFound("User not found");
+        case "P2002":
+          throw CustomError.badRequest("Invalid password data");
+        default:
+          throw CustomError.internalServerError();
+      }
     } else if (error instanceof CustomError) {
       throw error;
     } else {

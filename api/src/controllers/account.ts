@@ -83,15 +83,9 @@ export async function updateAccount(userId: string, input: IAccountInput) {
       },
     });
 
-    if (account) {
-      return account;
-    } else {
-      throw CustomError.notFound("Account not found");
-    }
+    return account;
   } catch (error) {
-    if (error instanceof CustomError) {
-      throw error;
-    } else if (error instanceof PrismaClientKnownRequestError) {
+    if (error instanceof PrismaClientKnownRequestError) {
       switch (error.code) {
         case "P2025":
           throw CustomError.badRequest("User not found");
@@ -123,15 +117,9 @@ export async function addCreditCard(userId: string, cardId: string) {
       },
     });
 
-    if (account) {
-      return account;
-    } else {
-      throw CustomError.notFound("Account not found");
-    }
+    return account;
   } catch (error) {
-    if (error instanceof CustomError) {
-      throw error;
-    } else if (error instanceof PrismaClientKnownRequestError) {
+    if (error instanceof PrismaClientKnownRequestError) {
       switch (error.code) {
         case "P2025":
           throw CustomError.badRequest("User not found");
