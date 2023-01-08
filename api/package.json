@@ -4,10 +4,11 @@
   "private": true,
   "main": "build/index.js",
   "scripts": {
-    "prepare": "prisma migrate deploy",
     "start": "node .",
     "build": "tsc",
     "test": "jest -i",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
     "db:reset": "prisma migrate reset --force",
     "dev": "nodemon src/index.ts",
     "lint": "prettier . --write",

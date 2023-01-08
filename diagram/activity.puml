@@ -1,0 +1,11 @@
+@startuml
+start
+:Création du panier de produit;
+:Validation panier (donnée envouer au TPE);
+if (Choix du moyen de payment) then (NFC)
+    :Passage de la carte sur le TPE;
+end
+else(QRcode)
+    :Scan du QRcode par le TPE;
+end
+@enduml
