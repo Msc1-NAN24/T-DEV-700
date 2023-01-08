@@ -1,6 +1,9 @@
 @startuml Class
+
+hide methods
+
 class User {
-    - id: uuid
+    - id: number
     - firstName: string
     - lastName: string
     - username: string
@@ -9,7 +12,7 @@ class User {
 }
 
 class Account {
-    - id: uuid
+    - id: number
     - credit_card_rfif: string
     - cheque_uuid: string
     - balance: number
@@ -20,13 +23,20 @@ class Account {
     - blocked: boolean
 }
 
-class Product {
-    - id: uuid
-    - name: string
-    - price: number
-    - description: string
+class Transaction {
+    - id: number
+    - amount: number
+    - date: date
+    - account_from: number
+    - account_to: number
+    - cancel: boolean
+    - type: string
+    - TPE_id: number
 }
 
 User "1" -- "0..1" Account : has
+Account "1" - "0..*" Transaction : account_from
+
+Account "1" - "0..*" Transaction : account_to
 
 @enduml
