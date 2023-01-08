@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+actor "Client" as cli
+rectangle "Application" as app
+
+rectangle TPE {
+    usecase "Resecoive montant" as rec
+    usecase "Afficher montant" as aff
+    usecase "Effectuer transaction" as trans
+
+}
+
+rectangle "API Banque" as bank
+
+app -- rec
+cli --> aff
+cli --> trans
+
+rec -> aff
+aff -> trans
+
+trans -- bank
+
+
+@enduml

@@ -1,0 +1,62 @@
+@startuml
+
+class BankApi{
+    - username: String
+    - password: String
+    - token: String
+    - ip: String
+    - port: int
+    - http: HTTPClient*
+    - client: WiFiClient*
+
+    + BankApi(ip: String, Port: int, user:String, password: String)
+    + receiveFrom(userID: String, amount: int): bool
+    + receiveFromNFC(userID: String, amount: int): bool
+    - login(): bool
+}
+class NfcModule{
+    - reif: MFRC522*
+    + NfcModule(ssPin: int, rstPin: int)
+    + read(): String
+}
+class OledScreen{
+    - display: Adafruit_SSD1306*
+
+    + OledScreen(screenWidth:int, screenHeight: int, oledResetPin: int = -1)
+    + welcome(): void
+    + printAmount(amount: int): void
+    + validateAnimation(): void
+    + errorAnimation(message: String): void
+    + process(): void
+    + clear(): void
+    + wifiWaiting(): void
+}
+
+class Program{
+
+    - bank: BankApi*
+    - screen: OledScreen*
+    - NFC: NfcModule*
+    - qrcode: QrCode*
+    - tram: String
+
+    + Program()
+    + loop() : void
+}
+class QrCode{
+    - result: String
+    - mili: long
+
+    + Qrcode()
+    + read(): String
+    + getUuid(): String
+    + getAmount(): int
+    - readRequest(): void
+}
+
+Program <-- BankApi
+Program <-- QrCode
+Program <-- NfcModule
+Program <-- OledScreen
+
+@enduml

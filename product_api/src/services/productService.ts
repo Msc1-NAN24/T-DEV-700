@@ -1,10 +1,10 @@
-import { Product } from "@prisma/client";
-import { prisma } from "..";
+import { Prisma, Product } from "@prisma/client";
+import prisma from "../client";
 
 export default class ProductService {
-  create = async (newProduct: any) => {
+  create = async (newProduct: Prisma.ProductCreateInput) => {
     const product = await prisma.product.create({
-      data: { ...newProduct },
+      data: newProduct,
     });
     return product;
   };

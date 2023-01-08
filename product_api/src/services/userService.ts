@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { prisma } from "..";
+import prisma from "../client";
 import crypto from "crypto";
 
 export default class UserService {
@@ -25,7 +25,9 @@ export default class UserService {
 
   getById = async (id: string) => {
     const user = await prisma.user.findUnique({
-      where: { id },
+      where: {
+        id,
+      },
       select: { email: true, id: true, orders: true, username: true },
     });
     return user;
@@ -47,7 +49,7 @@ export default class UserService {
       where: {
         id,
       },
-      select: { email: true, id: true, orders: true, username: true },
+      select: { email: true, id: true, username: true },
     });
     return user;
   };

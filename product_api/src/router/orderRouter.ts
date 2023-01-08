@@ -6,7 +6,7 @@ import authorization from "../middleware/authorize";
 const router = Router();
 const orderService = new OrderService();
 
-router.all("order", authorization);
+router.all("", authorization);
 router.get("/", async (req: Request, res: CustomResponse) => {
   try {
     const order = await orderService.getAllOrder();

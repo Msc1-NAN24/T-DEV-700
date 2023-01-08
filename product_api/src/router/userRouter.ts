@@ -1,16 +1,16 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { Router, Request } from "express";
-import UserService from "../services/userService";
 import { CustomResponse } from "../types/response";
 import { z, ZodError } from "zod";
 import crypto from "crypto";
 import { User } from "@prisma/client";
 import authorization from "../middleware/authorize";
+import UserService from "../services/userService";
 
 const router = Router();
 const userService = new UserService();
 
-router.all("/user", authorization);
+router.use(authorization);
 router.get("/", async (req: Request, res: CustomResponse) => {
   try {
     const users = await userService.getAll();
