@@ -1,21 +1,56 @@
-version: "3.8"
+version: "3"
 
 services:
   postgres:
-    image: postgres
+    image: "postgres:latest"
+    container_name: postgres
     environment:
       POSTGRES_USER: ${PGUSER}
       POSTGRES_PASSWORD: ${PGPASSWORD}
-      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_DB: cashmanager
     ports:
       - 5432:5432
-    volumes:
-      - "db-data:/var/lib/postgresql/data"
+
+  node:
+    container_name: API
+    build:
+      context: ./api
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_HOST: postgres
+      VIRTUAL_HOST: api-bank.moriceau.dev
+      DATABASE_URL: postgresql://${PGUSER}:${PGPASSWORD}@postgres:5432/product?schema=public
+      JWT_SECRET: ${JWT_SECRET_BANK}
+      APP_PORT: 3000
+    depends_on:
+      - postgres
+
+  product:
+    container_name: ProdutApi
+    build:
+      context: ./product_api
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_HOST: postgres
+      DATABASE_URL: postgresql://${PGUSER}:${PGPASSWORD}@postgres:5432/product?schema=public
+      JWT_SECRET: ${JWT_SECRET_PRODUCT}
+      APP_PORT: 3001
+    ports:
+      - 3001:3001
+    depends_on:
+      - postgres
+
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
 
-volumes:
-  db-data: {}
+networks:
+  default:
+    external:
+      name: nginx-proxy

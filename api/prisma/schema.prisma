@@ -11,33 +11,48 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(uuid())
-  firstName String
-  lastName  String
-  userName  String  @unique
-  password  String
-  id_admin  Boolean @default(false)
+  id         String  @id @default(uuid())
+  first_name String
+  last_name  String
+  username   String  @unique
+  email      String  @unique
+  password   String
+  is_admin   Boolean @default(false)
 
   account Account?
 }
 
 model Account {
   id            String   @id @default(uuid())
-  credit_card   Int      @unique
-  cheque_uuid   String   @unique
-  balance       Int
+  credit_card   Int?     @unique
+  cheque_uuid   String?  @unique
+  balance       Int      @default(0)
   refusal_count Int      @default(0)
-  ceilint       Int
-  max_overdraft Int
+  ceiling       Int      @default(100)
+  max_overdraft Int      @default(0)
   blocked       Boolean  @default(false)
   created_at    DateTime @default(now())
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String @unique
+
+  sent     Transaction[] @relation(name: "sender")
+  received Transaction[] @relation(name: "receiver")
 }
 
-model Product {
-  id    String @id @default(uuid())
-  name  String
-  price Int
+model Transaction {
+  id String @id @default(uuid())
+
+  amount        Int
+  is_successful Boolean @default(false)
+  is_refused    Boolean @default(false)
+  is_overdraft  Boolean @default(false)
+
+  created_at DateTime @default(now())
+
+  sender    Account? @relation(fields: [sender_id], references: [id], name: "sender")
+  sender_id String?
+
+  receiver    Account? @relation(fields: [receiver_id], references: [id], name: "receiver")
+  receiver_id String?
 }

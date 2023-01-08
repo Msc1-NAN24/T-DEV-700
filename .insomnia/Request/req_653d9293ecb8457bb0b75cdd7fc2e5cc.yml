@@ -1,0 +1,33 @@
+_id: req_653d9293ecb8457bb0b75cdd7fc2e5cc
+type: Request
+parentId: fld_12870ee8bd9d4a79a23c80cc986371a6
+modified: 1669045738021
+created: 1669045431764
+url: "{{ _.api_url }}/register"
+name: Register user
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"first_name": "test",
+    	"last_name": "test",
+    	"username": "test",
+    	"email": "test@test.com",
+    	"password": "T€st1234",
+    	"confirm_password": "T€st1234"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1669045431764
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
