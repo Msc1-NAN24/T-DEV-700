@@ -1,14 +1,14 @@
 # README
 
-ceci et la racine principale du code du TPE connecter
+ceci et la racine principale du code du TPE connecté
 
-vous trouverez ici tout les fichier source ainsi que le schéma de câblage et la documentation du TPE
+vous trouverez ici tous les fichiers source ainsi que le schéma de câblage et la documentation du TPE
 
 Pour la génération de la doc Doxygen le fichier [Doxyfile](./docs/Doxyfile) se trouve dans le docs.
 
-il crées par defaut la [sortie](./docs/Doxygen%20output) dans "docs/Doxygen output"
+il crées par défaut la [sortie](./docs/Doxygen%20output) dans "docs/Doxygen output"
 
-il utilise aussi graphviz pour généré les graphique
+il utilise aussi graphviz pour généré les graphiques.
 
 ## mise en place :
 
@@ -18,45 +18,43 @@ il utilise aussi graphviz pour généré les graphique
 
 - une fois l'installation faite aller dans le dossier TPE et l'ouvrir avec VScode _(le dossier doit être a la racine de l'ouverture et non le projet complet si non PIO le détectera pas)_
 
-- crée le fichier [secrets.ini](./secrets.ini) a partire du fichier example du même nom
+- crée le fichier [secrets.ini](./secrets.ini) à partir du fichier exemple du même nom
 
-- brancher le tpe au pc (prise de l'esp)
+- brancher le TPE au PC (prise de l'ESP)
 
 - cliquer sur le bouton d'upload "➡"
-
-  - attendre la fin du processus
 
 - si l'affichage `==== [SUCCESS] Took XX.XX seconds =====` apparaît la compilation et l'upload du code dans le TPE c'est bien passé.
 
 ### Installation :
 
-- brancher une des prise du lecteur qrcode a une alumenation (ou au telephone via hub)
+- brancher une des prises du lecteur QRcode a une alimentation (ou au téléphone via hub)
 
-- brancher la prise usb du l'esp32 au telephone
+- brancher la prise USB du l'esp32 au téléphone
 
-- l'ecran s'alume avec ecrit `Connection WiFi...`
+- l'écran s'allume avec écrit `Connexion WiFi...`
 
-  - l'or de la 1er utilisation cette ecran reste figé
+  - l'or de la 1er utilisation cet écran reste figé
 
-  - se connecter sur le wifi généré par l'esp (voir user/password dans [secrets.ini](./secrets.ini))
+  - se connecter sur le wifi généré par l'ESP (voir user/password dans [secrets.ini](./secrets.ini))
 
   - une fois connecter allez sur l'adresse [192.168.4.1](http://192.168.4.1) et renseigner les user password du wifi local
 
-  - une fois le wifi connecter appuyer sur le bouton "EN" ou de-brancher rebrancher l'esp pour le redémaré
+  - une fois le wifi connecter appuyer sur le bouton "EN" ou débrancher rebrancher l'esp pour le redémarré
 
-- si les opération se sont bien passer l'écran doit afficher bienvenue
+- si les opérations se sont bien passées, l'écran doit afficher bienvenue
 
 ### Utilisation :
 
-- pour une utilisation sans le téléphone il faut envoyer la valeur que l'on veut envoyer en centime via le port série émulé par l'esp via un moniteur série comme celui de [putty](https://www.putty.org/) ou [arduino IDE](https://www.arduino.cc/en/software#legacy-ide-18x). la vitesse du port par defaut est 115200
+- pour une utilisation sans le téléphone il faut envoyer la valeur que l'on veut envoyer en centime via le port série émulé par l'esp via un moniteur série comme celui de [putty](https://www.putty.org/) ou [arduino IDE](https://www.arduino.cc/en/software#legacy-ide-18x). la vitesse du port par défaut est 115200
 
 - pour la création des utilisateurs, de leur conte et leur mettre des crédit voir la doc de l'api dans ../api _(il faut au minimum)_ :
 
-  - crée 2 utilisateur (un commerçant et un client)
+  - crée deux utilisateurs (un commerçant et un client)
 
   - mettre des crédit au client _(via l'utilisation de prisa studio)_
 
-  - mettre un des id des badge NFC en id de carte au client _(pour rappel)_ :
+  - mettre un des IDs des badge NFC en id de carte au client _(pour rappel)_ :
 
     - rond bleu : 77991033
 
@@ -64,23 +62,23 @@ il utilise aussi graphviz pour généré les graphique
 
   - crées un id de chèque au client (id a utilisation unique)
 
-_seul 1 des 2 dernier point est requit a voir suivant les test voulue_
+_seul un des deux derniers points est requit à voir suivant les tests voulues_
 
 ### pour la création des QRcode chèque :
 
 - récupéré un id de chèque en base
 
-- aller sur un site de création de QRcode (type [qrcode-monkey](https://www.qrcode-monkey.com/#text)) _attention un site qui ne fait pas de qrcode de redirection_
+- aller sur un site de création de QRcode (type [qrcode-monkey](https://www.qrcode-monkey.com/#text)) _attention un site qui ne fait pas de QRcode de redirection_
 
-  - format du text qr code : `{"UUID":[ID_chèque],"amount":[PRIX]}` (_ex:_)
+  - format du text QRcode : `{"UUID":[ID_chèque],"amount":[PRIX]}` (_ex:_)
 
     - `{"UUID":"1fa8c95f-e356-4f73-bb33-1571f2d87d62","amount":"100"}`
 
     - `{"UUID":"89e869d4-1a1a-4d70-81f1-b0572ace8942","amount":"100"}`
 
-    (_rappel tout les prix son en centime_)
+    (_rappel tous les prix sont en centime_)
 
-    (caque id de qrcode son a utilisation unique)
+    (caque id de QRcode son a utilisation unique)
 
 ### Câblage par défaut:
 
