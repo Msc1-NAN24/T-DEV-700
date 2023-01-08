@@ -30,10 +30,6 @@ export class CustomError extends Error {
     return new CustomError(message, 409);
   }
 
-  static databaseError(message: string = "Database error") {
-    return new CustomError(message, 500);
-  }
-
   static credentialsError(message: string = "Invalid username or password") {
     return new CustomError(message, 401);
   }

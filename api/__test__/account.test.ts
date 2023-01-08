@@ -1,16 +1,18 @@
 import { faker } from "@faker-js/faker";
+import bcrypt from "bcrypt";
+import crypto from "crypto";
 import {
+  addCreditCard,
   getAccount,
   IAccountInput,
   updateAccount,
 } from "../src/controllers/account";
 import { prismaMock } from "../src/singleton";
 import { CustomError } from "../src/types/error";
-import bcrypt from "bcrypt";
 
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import dotenv from "dotenv";
 import dotenvExpand from "dotenv-expand";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 dotenvExpand.expand(dotenv.config());
 
@@ -47,16 +49,42 @@ describe("Account controller", () => {
     it("should throw not found error", async () => {
       prismaMock.account.findUnique.mockResolvedValueOnce(null);
 
-      await expect(getAccount(mockUser.id)).rejects.toThrow(CustomError);
       await expect(getAccount(mockUser.id)).rejects.toThrow(
         CustomError.notFound("Account not found")
       );
     });
 
-    it("should throw internal server error", async () => {
-      prismaMock.account.findUnique.mockRejectedValueOnce(new Error());
+    it("should throw user not found error", async () => {
+      prismaMock.account.findUnique.mockRejectedValueOnce(
+        new PrismaClientKnownRequestError("Internal server error", {
+          code: "P2025",
+          clientVersion: "4.6.1",
+        })
+      );
 
-      await expect(getAccount(mockUser.id)).rejects.toThrow(CustomError);
+      await expect(getAccount(mockUser.id)).rejects.toThrow(
+        CustomError.notFound("User not found")
+      );
+    });
+
+    it("should throw internal server error", async () => {
+      prismaMock.account.findUnique.mockRejectedValueOnce(
+        new PrismaClientKnownRequestError("Internal server error", {
+          code: "0",
+          clientVersion: "4.6.1",
+        })
+      );
+
+      await expect(getAccount(mockUser.id)).rejects.toThrow(
+        CustomError.internalServerError()
+      );
+    });
+
+    it("should throw internal server error", async () => {
+      prismaMock.account.findUnique.mockRejectedValueOnce(
+        new Error("Internal server error")
+      );
+
       await expect(getAccount(mockUser.id)).rejects.toThrow(
         CustomError.internalServerError()
       );
@@ -91,15 +119,17 @@ describe("Account controller", () => {
       };
 
       await expect(updateAccount(mockUser.id, input)).rejects.toThrow(
-        CustomError
-      );
-      await expect(updateAccount(mockUser.id, input)).rejects.toThrow(
-        CustomError.notFound("Account not found")
+        CustomError.notFound("User not found")
       );
     });
 
     it("should throw internal server error", async () => {
-      prismaMock.account.update.mockRejectedValueOnce(new Error());
+      prismaMock.account.update.mockRejectedValueOnce(
+        new PrismaClientKnownRequestError("Internal server error", {
+          code: "0",
+          clientVersion: "4.6.1",
+        })
+      );
 
       const input: IAccountInput = {
         ceiling: faker.datatype.number(),
@@ -107,9 +137,81 @@ describe("Account controller", () => {
       };
 
       await expect(updateAccount(mockUser.id, input)).rejects.toThrow(
-        CustomError
+        CustomError.internalServerError()
       );
+    });
+
+    it("should throw internal server error", async () => {
+      prismaMock.account.update.mockRejectedValueOnce(
+        new Error("Internal server error")
+      );
+
+      const input: IAccountInput = {
+        ceiling: faker.datatype.number(),
+        max_overdraft: faker.datatype.number(),
+      };
+
       await expect(updateAccount(mockUser.id, input)).rejects.toThrow(
+        CustomError.internalServerError()
+      );
+    });
+  });
+
+  describe("addCreditCard", () => {
+    it("should add credit card", async () => {
+      const mockCard = crypto.randomBytes(16).toString("hex");
+
+      prismaMock.account.update.mockResolvedValueOnce({
+        ...mockAccount,
+        credit_card: mockCard,
+      });
+
+      const account = await addCreditCard(mockUser.id, mockCard);
+
+      expect(account).toEqual({
+        ...mockAccount,
+        credit_card: mockCard,
+      });
+    });
+
+    it("should throw user not found error", async () => {
+      const mockCard = crypto.randomBytes(16).toString("hex");
+
+      prismaMock.account.update.mockRejectedValueOnce(
+        new PrismaClientKnownRequestError("User not found", {
+          code: "P2025",
+          clientVersion: "4.6.1",
+        })
+      );
+
+      await expect(addCreditCard(mockUser.id, mockCard)).rejects.toThrow(
+        CustomError.notFound("User not found")
+      );
+    });
+
+    it("should throw internal server error", async () => {
+      const mockCard = crypto.randomBytes(16).toString("hex");
+
+      prismaMock.account.update.mockRejectedValueOnce(
+        new PrismaClientKnownRequestError("Internal server error", {
+          code: "0",
+          clientVersion: "4.6.1",
+        })
+      );
+
+      await expect(addCreditCard(mockUser.id, mockCard)).rejects.toThrow(
+        CustomError.internalServerError()
+      );
+    });
+
+    it("should throw internal server error", async () => {
+      const mockCard = crypto.randomBytes(16).toString("hex");
+
+      prismaMock.account.update.mockRejectedValueOnce(
+        new Error("Internal server error")
+      );
+
+      await expect(addCreditCard(mockUser.id, mockCard)).rejects.toThrow(
         CustomError.internalServerError()
       );
     });
