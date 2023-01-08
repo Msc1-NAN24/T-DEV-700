@@ -17,6 +17,11 @@ public:
     OledScreen(int screenWidth, int screenHeight, int oledResetPin = -1);
 
     /**
+     * @brief display welcome screen
+     */
+    void welcome();
+
+    /**
      * @brief print the total amount on the screen
      *
      * @param amount The total amount to print in centimes
@@ -29,6 +34,13 @@ public:
     void validateAnimation();
 
     /**
+     * @brief Run error animation
+     *
+     * @param message Error message
+     */
+    void errorAnimation(String message);
+
+    /**
      * @brief Run the process animation
      */
     void process();
@@ -37,6 +49,14 @@ public:
      * @brief Clear the screen
      */
     void clear();
+
+
+    /**
+     * @brief messsage for wifi waiting
+     *
+     */
+    void wifiWaiting();
+
 
 private:
 

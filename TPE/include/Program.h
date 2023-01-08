@@ -8,24 +8,34 @@
 #include "BankApi.h"
 #include "OledScreen.h"
 #include "NfcModule.h"
+#include "QrCode.h"
 
 class Program {
 public:
     /**
-     * Program startup
+     * @brief Program setup
      */
     Program();
 
     /**
-     * Program main loop
+     * @brief Program main loop
      */
     void loop();
 
 private:
     BankApi* bank;
+
     OledScreen* screen;
 
     NfcModule* NFC;
+
+    QrCode* qrCode;
+
+    /**
+     * @brief tram envoyer en serie par l'app
+     */
+    String tram;
+
 };
 
 #endif

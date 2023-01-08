@@ -1,0 +1,6 @@
+(sym_lib_table
+  (lib (name "oled lib")(type "Legacy")(uri "${KIPRJMOD}/lib/SSD1306-128x64_OLED.lib")(options "")(descr ""))
+  (lib (name "esp32 lib")(type "Legacy")(uri "${KIPRJMOD}/lib/doit-esp32-devkit-v1.lib")(options "")(descr ""))
+  (lib (name "rfid lib")(type "Legacy")(uri "${KIPRJMOD}/lib/rfid-rd522.lib")(options "")(descr ""))
+  (lib (name "Qrcode-reader")(type "KiCad")(uri "${KIPRJMOD}/lib/Qrcode-reader.kicad_sym")(options "")(descr ""))
+)

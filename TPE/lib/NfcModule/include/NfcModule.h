@@ -22,9 +22,6 @@ public:
 
 private:
 
-    /**
-     * @brief
-     */
     MFRC522* rfid;
 
 };

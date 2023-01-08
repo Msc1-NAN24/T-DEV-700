@@ -1,8 +1,9 @@
 import { Router } from "express";
-import auth from "./routes/authentication";
-import users from "./routes/users";
+
 import accounts from "./routes/accounts";
+import auth from "./routes/authentication";
 import transactions from "./routes/transactions";
+import users from "./routes/users";
 
 const api = Router();
 
