@@ -21,7 +21,7 @@ services:
       POSTGRES_PASSWORD: ${PGPASSWORD}
       POSTGRES_HOST: postgres
       VIRTUAL_HOST: api-bank.moriceau.dev
-      DATABASE_URL: postgresql://${PGUSER}:${PGPASSWORD}@postgres:5432/product?schema=public
+      DATABASE_URL: postgresql://${PGUSER}:${PGPASSWORD}@postgres:5432/bank?schema=public
       JWT_SECRET: ${JWT_SECRET_BANK}
       APP_PORT: 3000
     depends_on:

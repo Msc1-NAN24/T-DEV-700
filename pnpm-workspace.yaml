@@ -1,4 +1,4 @@
 packages:
   - "api"
-  # exclude packages that are inside test directories
+  - "product_api"
   - "!**/test/**"
