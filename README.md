@@ -1,5 +1,20 @@
 # Cash Manager
 
+## The project
+We had to create a cash manager application.
+There is 3 parts to this application :
+- the bank api
+- the product api
+- the payment terminal
+
+## Contributors
+Our team is composed of:
+- MORICEAU Elie
+- QUEAU Maël
+- BOESMIER Clément
+- PINSON Ewen
+- BILIEC Jocelyn
+
 ## Setup
 
 ```sh
